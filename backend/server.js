@@ -44,37 +44,11 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static frontend assets for seamless local development
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// Health check & API Overview endpoint
+// Simple Health Check Endpoint
 app.get('/api', (req, res) => {
   res.status(200).json({
-    project: 'Movie Review Platform REST API',
-    course: 'Semester 3 Backend Development',
-    institution: 'ITM Skills University',
-    author: 'Aaroh Wankhade',
-    studentId: '150096726175',
-    status: 'Active',
-    endpoints: {
-      auth: {
-        register: 'POST /api/auth/register',
-        login: 'POST /api/auth/login',
-        me: 'GET /api/users/me',
-      },
-      movies: {
-        getAll: 'GET /api/movies',
-        getById: 'GET /api/movies/:id',
-        create: 'POST /api/movies',
-        update: 'PATCH /api/movies/:id',
-        delete: 'DELETE /api/movies/:id',
-        dashboardStats: 'GET /api/movies/dashboard/stats',
-        averageRating: 'GET /api/movies/:id/average-rating (MongoDB Aggregation)',
-      },
-      reviews: {
-        createForMovie: 'POST /api/movies/:id/reviews',
-        getForMovie: 'GET /api/movies/:id/reviews',
-        updateOwnReview: 'PATCH /api/reviews/:id (Owner Only)',
-        deleteOwnReview: 'DELETE /api/reviews/:id (Owner Only)',
-      },
-    },
+    status: 'OK',
+    message: 'Movie Review Platform REST API Running',
   });
 });
 

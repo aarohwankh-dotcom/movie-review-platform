@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CineReview — Student Master Guide & Line-by-Line Code Explainer</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 12mm 15mm 12mm 15mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.55;
+      color: #1a1a1a;
+      background-color: #ffffff;
+    }
+
+    .page {
+      page-break-after: always;
+      position: relative;
+      min-height: 980px;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    .header-bar {
+      border-bottom: 2px solid #0071e3;
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .header-title {
+      font-size: 14pt;
+      font-weight: 700;
+      color: #0071e3;
+      letter-spacing: -0.02em;
+    }
+
+    .header-sub {
+      font-size: 8.5pt;
+      color: #666;
+    }
+
+    h1 {
+      font-size: 18pt;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: 13pt;
+      font-weight: 700;
+      color: #0071e3;
+      margin-top: 14px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid #e1e4e8;
+      padding-bottom: 4px;
+    }
+
+    h3 {
+      font-size: 11pt;
+      font-weight: 600;
+      color: #24292e;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+
+    p {
+      margin-bottom: 8px;
+      color: #2b2b2b;
+    }
+
+    .callout {
+      background-color: #f0f7ff;
+      border-left: 4px solid #0071e3;
+      padding: 10px 14px;
+      margin: 10px 0;
+      border-radius: 0 6px 6px 0;
+      font-size: 9.5pt;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      color: #0071e3;
+      margin-bottom: 3px;
+    }
+
+    .analogies {
+      background-color: #fff9e6;
+      border-left: 4px solid #ffb800;
+      padding: 10px 14px;
+      margin: 10px 0;
+      border-radius: 0 6px 6px 0;
+      font-size: 9.5pt;
+    }
+
+    .analogies-title {
+      font-weight: 700;
+      color: #b38600;
+      margin-bottom: 3px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 9pt;
+    }
+
+    th, td {
+      border: 1px solid #d0d7de;
+      padding: 6px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #f6f8fa;
+      font-weight: 600;
+      color: #24292e;
+    }
+
+    code {
+      font-family: "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 8.5pt;
+      background-color: #f3f4f6;
+      padding: 2px 4px;
+      border-radius: 4px;
+      color: #d73a49;
+    }
+
+    pre {
+      background-color: #0d1117;
+      color: #c9d1d9;
+      font-family: "SF Mono", Consolas, Menlo, monospace;
+      font-size: 8pt;
+      line-height: 1.45;
+      padding: 10px 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 8px 0;
+      white-space: pre-wrap;
+    }
+
+    .code-comment { color: #8b949e; font-style: italic; }
+    .code-keyword { color: #ff7b72; font-weight: bold; }
+    .code-string { color: #a5d6ff; }
+    .code-fn { color: #d2a8ff; }
+    .code-num { color: #79c0ff; }
+
+    .line-explain {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin: 6px 0;
+      font-size: 9pt;
+    }
+
+    .line-explain strong {
+      color: #0071e3;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 8pt;
+      font-weight: 600;
+    }
+
+    .badge-blue { background: #e1f0ff; color: #0071e3; }
+    .badge-green { background: #dcfce7; color: #15803d; }
+    .badge-gold { background: #fef3c7; color: #b45309; }
+
+    .viva-box {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-left: 3px solid #10b981;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      border-radius: 0 6px 6px 0;
+      font-size: 9pt;
+    }
+
+    .viva-q {
+      font-weight: 700;
+      color: #065f46;
+      margin-bottom: 4px;
+    }
+
+    .viva-a {
+      color: #374151;
+    }
+
+    .footer-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-top: 1px solid #e1e4e8;
+      padding-top: 6px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 8pt;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 1: COVER & BIG PICTURE OVERVIEW (EXPLAIN LIKE I'M 5)                -->
+  <!-- ========================================================================= -->
+  <div class="page">
+    <div class="header-bar">
+      <div>
+        <div class="header-title">STUDENT VIVA &amp; CODE COMPANION</div>
+        <div class="header-sub">Case Study No. 118: Movie Review Platform | Semester 3 Backend Development</div>
+      </div>
+      <div style="text-align: right;">
+        <span class="badge badge-blue">Student Confidential Guide</span>
+      </div>
+    </div>
+
+    <h1>CineReview: Everything Explained Simply</h1>
+    <p style="font-size: 11pt; color: #555; margin-bottom: 14px;">
+      <strong>Author:</strong> Aaroh Wankhade | <strong>Student ID:</strong> 150096726175 | <strong>University:</strong> ITM Skills University
+    </p>
+
+    <div class="analogies">
+      <div class="analogies-title">👶 The "Explain Like I'm 5" Big Picture Analogy</div>
+      <p>Imagine a digital movie theater noticeboard called <strong>CineReview</strong>:</p>
+      <ul style="margin-left: 20px; line-height: 1.6;">
+        <li><strong>Browsing (Public):</strong> Anyone walking on the street can look at the movie posters and read what others wrote.</li>
+        <li><strong>Writing a Review (Requires Ticket/JWT):</strong> If you want to post your own score (1 to 5 stars) and review, you must first register or log in. When you log in, the server stamps a VIP wristband called a <code>JWT Token</code> onto your browser.</li>
+        <li><strong>The Math Teacher (MongoDB Aggregation $avg):</strong> Every time someone gives a rating, MongoDB automatically takes all ratings for that movie, adds them up, divides by the total count, and shows the average score (e.g., 4.7 / 5.0) in real-time.</li>
+        <li><strong>The Security Guard (Ownership Middleware):</strong> You can only edit or throw away (delete) <em>your own</em> review. If another student tries to edit your review, the server shouts <code>HTTP 403 Forbidden!</code> and stops them instantly.</li>
+      </ul>
+    </div>
+
+    <h2>1. The Exact 5 Case Study Objectives & How We Solved Them</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 25%;">Case Study Objective</th>
+          <th style="width: 45%;">How It Works (In Plain English)</th>
+          <th style="width: 30%;">File Responsible</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Mongoose Schemas with References</strong></td>
+          <td>Movies and Reviews are separate documents. The Review document stores the <code>ObjectId</code> of the Movie and User it belongs to.</td>
+          <td><code>models/Movie.js</code><br><code>models/Review.js</code></td>
+        </tr>
+        <tr>
+          <td><strong>2. CRUD Operations</strong></td>
+          <td>Create, Read, Update, Delete for movies and audience reviews via standard HTTP methods (POST, GET, PATCH, DELETE).</td>
+          <td><code>controllers/movieController.js</code><br><code>controllers/reviewController.js</code></td>
+        </tr>
+        <tr>
+          <td><strong>3. Ownership Authorization</strong></td>
+          <td>Checks if the logged-in user's ID matches the author's ID on the review. If they don't match, blocks with <strong>403 Forbidden</strong>.</td>
+          <td><code>middleware/ownershipMiddleware.js</code></td>
+        </tr>
+        <tr>
+          <td><strong>4. Dynamic Average Aggregation</strong></td>
+          <td>Runs a 2-stage MongoDB pipeline: <code>$match</code> filters reviews for the movie, and <code>$group</code> with <code>$avg</code> computes the mathematical mean.</td>
+          <td><code>controllers/movieController.js</code><br>(Endpoint: <code>/average-rating</code>)</td>
+        </tr>
+        <tr>
+          <td><strong>5. Strict Validation</strong></td>
+          <td>Ensures ratings are integers between 1 and 5, review text is non-empty, and required fields are never omitted.</td>
+          <td><code>middleware/validationMiddleware.js</code><br><code>models/Review.js</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-title">💡 What Makes This Backend Pure &amp; Syllabus-Compliant?</div>
+      Zero external bloat. We used only Node.js, Express.js, MongoDB/Mongoose, JWT, and Bcryptjs. Everything asked in the Case Study is present, and nothing extra is cluttering your project.
+    </div>
+
+    <div class="footer-bar">
+      <span>CineReview — Master Student Guide</span>
+      <span>Page 1 of 5</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 2: FILE-BY-FILE MAP (WHAT IS DONE WHERE?)                            -->
+  <!-- ========================================================================= -->
+  <div class="page">
+    <div class="header-bar">
+      <div>
+        <div class="header-title">ARCHITECTURE MAP: WHAT IS DONE WHERE?</div>
+        <div class="header-sub">Complete Directory Breakdown for Quick Viva Reference</div>
+      </div>
+      <div style="text-align: right;">
+        <span class="badge badge-green">Clean &amp; Minimal Architecture</span>
+      </div>
+    </div>
+
+    <h2>2. Backend Project Structure & File Duties</h2>
+    <p>When the examiner asks: <em>"Where does this happen?"</em>, use this cheat sheet:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 28%;">Directory &amp; File</th>
+          <th style="width: 42%;">What It Does (Plain Terms)</th>
+          <th style="width: 30%;">Examiner Key Takeaway</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>backend/server.js</code></td>
+          <td>The front door of our application. Sets up Express, CORS, static file serving, connects to MongoDB, and listens on port 5001.</td>
+          <td>Initial entry point; loads environment and mounts all API routes.</td>
+        </tr>
+        <tr>
+          <td><code>backend/config/db.js</code></td>
+          <td>Database connection manager. Connects to MongoDB Atlas URI or starts automated in-memory MongoDB fallback.</td>
+          <td>Zero external server dependency; runs standalone anywhere.</td>
+        </tr>
+        <tr>
+          <td><code>backend/models/User.js</code></td>
+          <td>User blueprint. Has name, email, password. Automatically hashes passwords with <strong>bcrypt</strong> before saving.</td>
+          <td>Bcrypt pre-save hook; matches passwords securely.</td>
+        </tr>
+        <tr>
+          <td><code>backend/models/Movie.js</code></td>
+          <td>Movie blueprint. Stores title, genre, releaseYear, posterUrl, and createdBy.</td>
+          <td>Holds movie metadata with validation.</td>
+        </tr>
+        <tr>
+          <td><code>backend/models/Review.js</code></td>
+          <td>Review blueprint. Stores <code>movie</code> (ObjectId), <code>user</code> (ObjectId), <code>rating</code> (1-5), and <code>reviewText</code>.</td>
+          <td><strong>Mongoose References</strong> linking collections together.</td>
+        </tr>
+        <tr>
+          <td><code>middleware/authMiddleware.js</code></td>
+          <td>Inspects the incoming HTTP <code>Authorization: Bearer &lt;token&gt;</code> header. Unpacks JWT and attaches <code>req.user</code>.</td>
+          <td>Protects private routes from unauthenticated users (401).</td>
+        </tr>
+        <tr>
+          <td><code>middleware/ownershipMiddleware.js</code></td>
+          <td>Compares <code>review.user.toString() === req.user._id.toString()</code>. Blocks non-authors with <strong>HTTP 403 Forbidden</strong>.</td>
+          <td><strong>Core Case Study Objective 3!</strong> Ownership guard.</td>
+        </tr>
+        <tr>
+          <td><code>middleware/validationMiddleware.js</code></td>
+          <td>Validates that rating is a number from 1 to 5, and review text is not empty or too short before touching the database.</td>
+          <td><strong>Core Case Study Objective 5!</strong> Prevents bad data.</td>
+        </tr>
+        <tr>
+          <td><code>controllers/movieController.js</code></td>
+          <td>Handles movie queries and the <strong>MongoDB Aggregation Pipeline</strong> to compute dynamic average ratings.</td>
+          <td><strong>Core Case Study Objective 4!</strong> Uses <code>$match</code> and <code>$group</code>.</td>
+        </tr>
+        <tr>
+          <td><code>controllers/reviewController.js</code></td>
+          <td>Creates reviews, retrieves reviews for a movie, and handles owner-only updates and deletions.</td>
+          <td><strong>Core Case Study Objective 2!</strong> CRUD logic.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. Request Lifecycle Diagram: What Happens When User Hits "Publish"?</h2>
+    <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; font-family: monospace; font-size: 8.5pt; line-height: 1.6; margin: 10px 0;">
+      [Frontend Button Click] <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;↓ Sends POST /api/movies/:id/reviews with Bearer Token &amp; JSON { rating: 5, reviewText: "Great!" }<br>
+      [authMiddleware.js] <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;↓ Verifies JWT signature. Valid? Attaches req.user. Invalid? Returns 401 Unauthorized.<br>
+      [validationMiddleware.js] <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;↓ Checks: Is rating 1-5? Is text present? Valid? Calls next(). Invalid? Returns 400 Bad Request.<br>
+      [reviewController.js] <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;↓ Executes Review.create({ movie: movieId, user: req.user._id, rating: 5, reviewText: "..." })<br>
+      [Database Updated &amp; Aggregation] <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;↓ Review saved! MongoDB recalculates average rating via $avg pipeline. Returns 201 Created to UI.
+    </div>
+
+    <div class="footer-bar">
+      <span>CineReview — Master Student Guide</span>
+      <span>Page 2 of 5</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 3: LINE-BY-LINE CODE EXPLAINER (CRITICAL SNIPPETS)                   -->
+  <!-- ========================================================================= -->
+  <div class="page">
+    <div class="header-bar">
+      <div>
+        <div class="header-title">LINE-BY-LINE CODE EXPLAINER</div>
+        <div class="header-sub">The Exact Lines Every Examiner Asks About, Explained Simply</div>
+      </div>
+      <div style="text-align: right;">
+        <span class="badge badge-gold">Key Viva Code Snippets</span>
+      </div>
+    </div>
+
+    <h2>Snippet 1: The MongoDB Aggregation Pipeline ($avg, $match, $group)</h2>
+    <p><strong>Location:</strong> <code>backend/controllers/movieController.js</code></p>
+    <pre>
+<span class="code-keyword">const</span> stats = <span class="code-keyword">await</span> Review.<span class="code-fn">aggregate</span>([
+  <span class="code-comment">// Stage 1: Filter only reviews that belong to THIS specific movie</span>
+  {
+    <span class="code-keyword">$match</span>: { movie: <span class="code-keyword">new</span> mongoose.Types.ObjectId(movieId) }
+  },
+  <span class="code-comment">// Stage 2: Group all matching reviews together to calculate the math</span>
+  {
+    <span class="code-keyword">$group</span>: {
+      _id: <span class="code-string">'$movie'</span>,                        <span class="code-comment">// Group key is the movie ID</span>
+      averageRating: { <span class="code-keyword">$avg</span>: <span class="code-string">'$rating'</span> },   <span class="code-comment">// Computes mathematical average of ratings</span>
+      totalReviews: { <span class="code-keyword">$sum</span>: <span class="code-num">1</span> }             <span class="code-comment">// Counts 1 for each review document</span>
+    }
+  }
+]);
+    </pre>
+
+    <div class="line-explain">
+      <strong>Line-by-Line Explanation for Examiner:</strong><br>
+      • <code>Review.aggregate([...])</code>: Runs MongoDB's native multi-stage data processing pipeline instead of manually looping in Node.js.<br>
+      • <code>$match</code>: Like an SQL <code>WHERE</code> clause. It quickly filters only reviews where <code>movie == movieId</code>.<br>
+      • <code>$group</code>: Like an SQL <code>GROUP BY</code>. It collapses all matched reviews into a single summary record.<br>
+      • <code>$avg: '$rating'</code>: MongoDB calculates the exact mean rating directly inside the database engine for maximum speed.<br>
+      • <code>$sum: 1</code>: Increments a counter by 1 for every document, giving us the total review count.
+    </div>
+
+    <h2>Snippet 2: The Ownership Authorization Middleware (403 Forbidden)</h2>
+    <p><strong>Location:</strong> <code>backend/middleware/ownershipMiddleware.js</code></p>
+    <pre>
+<span class="code-keyword">const</span> authorizeReviewOwner = <span class="code-keyword">async</span> (req, res, next) => {
+  <span class="code-keyword">const</span> review = <span class="code-keyword">await</span> Review.<span class="code-fn">findById</span>(req.params.id);
+  <span class="code-keyword">if</span> (!review) {
+    <span class="code-keyword">return</span> res.<span class="code-fn">status</span>(<span class="code-num">404</span>).<span class="code-fn">json</span>({ message: <span class="code-string">'Review not found'</span> });
+  }
+
+  <span class="code-comment">// Compare author ID with logged-in user ID</span>
+  <span class="code-keyword">const</span> isOwner = review.user.<span class="code-fn">toString</span>() === req.user._id.<span class="code-fn">toString</span>();
+
+  <span class="code-keyword">if</span> (!isOwner) {
+    <span class="code-keyword">return</span> res.<span class="code-fn">status</span>(<span class="code-num">403</span>).<span class="code-fn">json</span>({
+      success: <span class="code-keyword">false</span>,
+      message: <span class="code-string">'Forbidden: You are only authorized to edit or delete your own reviews'</span>
+    });
+  }
+
+  req.review = review; <span class="code-comment">// Attach review to request object for controller use</span>
+  <span class="code-fn">next</span>();              <span class="code-comment">// Allow request to continue!</span>
+};
+    </pre>
+
+    <div class="line-explain">
+      <strong>Line-by-Line Explanation for Examiner:</strong><br>
+      • <code>review.user.toString() === req.user._id.toString()</code>: <em>Why <code>.toString()</code>?</em> In MongoDB, IDs are binary <code>ObjectId</code> objects. Comparing two objects with <code>===</code> checks memory references, not values! Converting to string ensures we compare the actual 24-character hexadecimal IDs.<br>
+      • <code>HTTP 403 Forbidden</code>: The official HTTP standard status code indicating that the server knows who the user is, but refuses to authorize the action.
+    </div>
+
+    <h2>Snippet 3: Bcrypt Password Hashing Pre-Save Hook</h2>
+    <p><strong>Location:</strong> <code>backend/models/User.js</code></p>
+    <pre>
+userSchema.<span class="code-fn">pre</span>(<span class="code-string">'save'</span>, <span class="code-keyword">async function</span> (next) {
+  <span class="code-keyword">if</span> (!<span class="code-keyword">this</span>.<span class="code-fn">isModified</span>(<span class="code-string">'password'</span>)) <span class="code-keyword">return</span> <span class="code-fn">next</span>();
+  <span class="code-keyword">const</span> salt = <span class="code-keyword">await</span> bcrypt.<span class="code-fn">genSalt</span>(<span class="code-num">10</span>);
+  <span class="code-keyword">this</span>.password = <span class="code-keyword">await</span> bcrypt.<span class="code-fn">hash</span>(<span class="code-keyword">this</span>.password, salt);
+  <span class="code-fn">next</span>();
+});
+    </pre>
+    <div class="line-explain">
+      <strong>Explanation:</strong> Automatically scrambles plain passwords into irreversible hashes with 10 salt rounds before saving to database. Even if the database is leaked, raw passwords are never compromised.
+    </div>
+
+    <div class="footer-bar">
+      <span>CineReview — Master Student Guide</span>
+      <span>Page 3 of 5</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 4: TOP VIVA QUESTIONS & INSTANT SPOKEN ANSWERS                       -->
+  <!-- ========================================================================= -->
+  <div class="page">
+    <div class="header-bar">
+      <div>
+        <div class="header-title">TOP VIVA QUESTIONS &amp; SPOKEN ANSWERS</div>
+        <div class="header-sub">Memorize or Review These Bullet Points for High Scoring</div>
+      </div>
+      <div style="text-align: right;">
+        <span class="badge badge-green">100% Viva Success</span>
+      </div>
+    </div>
+
+    <h2>4. Quick Viva Q&amp;A Cheat Sheet (Speak These Aloud)</h2>
+
+    <div class="viva-box">
+      <div class="viva-q">Q1: How do you establish relationships between Movie and Review in Mongoose?</div>
+      <div class="viva-a">
+        <strong>Answer:</strong> "We use Mongoose document referencing. In the Review schema, we define <code>movie: { type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }</code> and <code>user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }</code>. When querying, we can use <code>.populate('user', 'name email')</code> to join document data dynamically without duplicating records."
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q2: Why compute the average rating using MongoDB Aggregation instead of JavaScript loops?</div>
+      <div class="viva-a">
+        <strong>Answer:</strong> "Calculating averages inside JavaScript requires fetching all reviews into Node.js memory, causing memory spikes and network latency when there are thousands of reviews. The MongoDB Aggregation pipeline (<code>$match</code> and <code>$group</code> with <code>$avg</code>) executes directly in C++ on the database engine and returns only the single aggregated number."
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q3: What is the difference between 401 Unauthorized and 403 Forbidden?</div>
+      <div class="viva-a">
+        <strong>Answer:</strong> "<strong>401 Unauthorized</strong> means authentication is missing or invalid—the server doesn't know who you are (e.g. missing JWT). <strong>403 Forbidden</strong> means authentication succeeded, but you do not have permission to modify this specific resource (e.g. User A trying to delete User B's review)."
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q4: How does JWT authentication work in your application?</div>
+      <div class="viva-a">
+        <strong>Answer:</strong> "When a user logs in, the server generates a signed JSON Web Token using <code>jwt.sign({ id: user._id }, JWT_SECRET)</code>. The frontend stores this token and sends it in the HTTP <code>Authorization: Bearer &lt;token&gt;</code> header. Our <code>protect</code> middleware parses the token using <code>jwt.verify()</code> and attaches the user object to <code>req.user</code>."
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q5: What happens if a user submits a rating of 6 or -1?</div>
+      <div class="viva-a">
+        <strong>Answer:</strong> "It is rejected before touching the database by our <code>validateReviewInput</code> middleware with <strong>HTTP 400 Bad Request</strong>. Additionally, the Mongoose schema has <code>min: 1</code> and <code>max: 5</code> validators to ensure database-level schema integrity."
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q6: Why did you convert IDs to strings using .toString() in ownership check?</div>
+      <div class="viva-a">
+        <strong>Answer:</strong> "MongoDB <code>_id</code> fields are BSON ObjectId objects. Comparing two objects with <code>===</code> checks if they point to the same memory location, which evaluates to false. Calling <code>.toString()</code> ensures we compare their 24-character hexadecimal values."
+      </div>
+    </div>
+
+    <div class="viva-box">
+      <div class="viva-q">Q7: How did you implement cascade deletion for movies?</div>
+      <div class="viva-a">
+        <strong>Answer:</strong> "In <code>movieController.js</code> under <code>deleteMovie</code>, before deleting the movie document, we run <code>await Review.deleteMany({ movie: movie._id })</code> to eliminate orphan reviews and keep the database consistent."
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <span>CineReview — Master Student Guide</span>
+      <span>Page 4 of 5</span>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PAGE 5: STEP-BY-STEP GITHUB & LIVE CLOUD DEPLOYMENT GUIDE                -->
+  <!-- ========================================================================= -->
+  <div class="page">
+    <div class="header-bar">
+      <div>
+        <div class="header-title">STEP-BY-STEP GITHUB &amp; CLOUD DEPLOYMENT GUIDE</div>
+        <div class="header-sub">How to Push Code, Deploy, and Get Live Links for Case Study Deliverable</div>
+      </div>
+      <div style="text-align: right;">
+        <span class="badge badge-blue">Deliverables Step-by-Step</span>
+      </div>
+    </div>
+
+    <h2>5. Case Study Deliverable: Step-by-Step Deployment Guide</h2>
+    <p>The case study states: <em>"Deploy backend on Render/Railway with MongoDB Atlas; deploy frontend on Vercel/Netlify."</em> Here is the exact recipe:</p>
+
+    <h3>Part A: Push Your Project to GitHub (5 Minutes)</h3>
+    <ol style="margin-left: 20px; font-size: 9pt; line-height: 1.6;">
+      <li>Open your terminal in the project folder:
+        <pre>cd "/Users/aarohwankhade/Desktop/Backend Project"</pre>
+      </li>
+      <li>Create a new repository on your GitHub account (<a href="https://github.com/new" target="_blank">github.com/new</a>) named: <code>movie-review-platform</code> (set to Public).</li>
+      <li>Link and push your local commits to GitHub:
+        <pre>
+git remote add origin https://github.com/YOUR_GITHUB_USERNAME/movie-review-platform.git
+git branch -M main
+git push -u origin main
+        </pre>
+      </li>
+      <li><strong>Your GitHub Repository Link:</strong> <code>https://github.com/YOUR_GITHUB_USERNAME/movie-review-platform</code></li>
+    </ol>
+
+    <h3>Part B: Setup Free MongoDB Atlas Database (3 Minutes)</h3>
+    <ol style="margin-left: 20px; font-size: 9pt; line-height: 1.6;">
+      <li>Sign in to <a href="https://cloud.mongodb.com">MongoDB Atlas</a> and create a Free M0 Shared Cluster.</li>
+      <li>Under <strong>Database Access</strong>, create a user (e.g. username: <code>cinereview_admin</code>, password: <code>SecurePass123!</code>).</li>
+      <li>Under <strong>Network Access</strong>, click <strong>Add IP Address</strong> and select <strong>Allow Access From Anywhere (0.0.0.0/0)</strong>.</li>
+      <li>Click <strong>Connect</strong> &rarr; <strong>Drivers</strong> &rarr; Copy the Connection String:
+        <pre>mongodb+srv://cinereview_admin:SecurePass123!@cluster0.abcde.mongodb.net/cinereview_db?retryWrites=true&w=majority</pre>
+      </li>
+    </ol>
+
+    <h3>Part C: Deploy Backend on Render (Free &amp; Automatic)</h3>
+    <ol style="margin-left: 20px; font-size: 9pt; line-height: 1.6;">
+      <li>Sign in to <a href="https://render.com">Render.com</a> and click <strong>New +</strong> &rarr; <strong>Web Service</strong>.</li>
+      <li>Connect your GitHub repository: <code>movie-review-platform</code>.</li>
+      <li>Configure settings:
+        <ul style="margin-left: 15px;">
+          <li><strong>Root Directory:</strong> <code>backend</code></li>
+          <li><strong>Build Command:</strong> <code>npm install</code></li>
+          <li><strong>Start Command:</strong> <code>node server.js</code></li>
+        </ul>
+      </li>
+      <li>Under <strong>Environment Variables</strong>, add:
+        <ul style="margin-left: 15px;">
+          <li><code>PORT</code> = <code>5001</code></li>
+          <li><code>NODE_ENV</code> = <code>production</code></li>
+          <li><code>MONGO_URI</code> = <em>Your Atlas Connection String from Part B</em></li>
+          <li><code>JWT_SECRET</code> = <code>supersecret_itm_semester3_jwt_key_2026</code></li>
+        </ul>
+      </li>
+      <li>Click <strong>Deploy Web Service</strong>. In 2 minutes, Render gives you your live URL:
+        <pre>https://movie-review-platform-api.onrender.com</pre>
+      </li>
+    </ol>
+
+    <h3>Part D: Deploy Frontend on Vercel / Netlify</h3>
+    <ol style="margin-left: 20px; font-size: 9pt; line-height: 1.6;">
+      <li>In <code>frontend/js/config.js</code>, update <code>API_BASE_URL</code>:
+        <pre>const API_BASE_URL = 'https://movie-review-platform-api.onrender.com/api';</pre>
+      </li>
+      <li>Commit and push the change to GitHub:
+        <pre>git commit -am "chore: point frontend to production Render backend" && git push</pre>
+      </li>
+      <li>Sign in to <a href="https://vercel.com">Vercel</a>, click <strong>Add New Project</strong>, select <code>movie-review-platform</code>, set Root Directory to <code>frontend</code>, and click <strong>Deploy</strong>!</li>
+      <li><strong>Your Live Deployable Frontend URL:</strong> <code>https://movie-review-platform.vercel.app</code></li>
+    </ol>
+
+    <div class="callout" style="margin-top: 8px;">
+      <div class="callout-title">📋 Summary of Deliverables to Submit to University:</div>
+      1. <strong>GitHub Repository URL:</strong> <code>https://github.com/YOUR_USERNAME/movie-review-platform</code><br>
+      2. <strong>Live Frontend URL:</strong> <code>https://movie-review-platform.vercel.app</code><br>
+      3. <strong>Live REST API URL:</strong> <code>https://movie-review-platform-api.onrender.com/api</code><br>
+      4. <strong>Project Report PDF:</strong> <code>Movie_Review_Platform_Report.pdf</code> (14 pages)<br>
+      5. <strong>Student Viva Companion PDF:</strong> <code>STUDENT_VIVA_AND_CODE_EXPLAINER.pdf</code> (5 pages)
+    </div>
+
+    <div class="footer-bar">
+      <span>CineReview — Master Student Guide</span>
+      <span>Page 5 of 5</span>
+    </div>
+  </div>
+
+</body>
+</html>
