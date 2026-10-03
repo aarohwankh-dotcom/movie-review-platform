@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .diagram-container {
+      margin-bottom: 40px;
+      padding: 20px;
+      background: #fafafa;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Architecture Diagram -->
+  <div id="diagram-arch" class="diagram-container">
+    <div class="title">System Architecture: Layered Full-Stack Model</div>
+    <svg width="100%" height="auto" viewBox="0 0 760 340" style="display: block;">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 2 L 8 5 L 0 8 z" fill="#475569"/>
+        </marker>
+      </defs>
+
+      <!-- Client Layer -->
+      <rect x="30" y="20" width="320" height="52" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="190" y="42" font-size="13" font-weight="bold" fill="#1e3a8a" text-anchor="middle">Interactive Web Console (Frontend)</text>
+      <text x="190" y="58" font-size="10.5" fill="#3b82f6" text-anchor="middle">HTML5, Vanilla CSS3, JavaScript, Fetch API, JWT Token Store</text>
+
+      <line x1="190" y1="72" x2="190" y2="100" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="250" y="88" font-size="10" fill="#64748b" font-weight="600">HTTP / JSON (REST)</text>
+
+      <!-- API & Middleware Layer -->
+      <rect x="30" y="100" width="320" height="52" rx="8" fill="#fdf2f8" stroke="#db2777" stroke-width="1.5"/>
+      <text x="190" y="122" font-size="13" font-weight="bold" fill="#831843" text-anchor="middle">Express.js REST API & Routing</text>
+      <text x="190" y="138" font-size="10.5" fill="#be185d" text-anchor="middle">Controllers: authController, movieController, reviewController</text>
+
+      <line x1="190" y1="152" x2="190" y2="180" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="250" y="168" font-size="10" fill="#64748b" font-weight="600">Next() Pipeline</text>
+
+      <!-- Security & Integrity Layer -->
+      <rect x="30" y="180" width="320" height="52" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
+      <text x="190" y="202" font-size="13" font-weight="bold" fill="#78350f" text-anchor="middle">Security & Ownership Middleware</text>
+      <text x="190" y="218" font-size="10.5" fill="#b45309" text-anchor="middle">JWT Verification, authorizeReviewOwner (403), Validation</text>
+
+      <line x1="190" y1="232" x2="190" y2="260" stroke="#475569" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="250" y="248" font-size="10" fill="#64748b" font-weight="600">Mongoose Calls</text>
+
+      <!-- Database Layer -->
+      <rect x="30" y="260" width="320" height="52" rx="8" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+      <text x="190" y="282" font-size="13" font-weight="bold" fill="#064e3b" text-anchor="middle">MongoDB Atlas & Mongoose ODM</text>
+      <text x="190" y="298" font-size="10.5" fill="#047857" text-anchor="middle">Collections: Users, Movies, Reviews & Aggregation Pipeline</text>
+
+      <!-- Right Side Layer Descriptions -->
+      <line x1="350" y1="46" x2="420" y2="46" stroke="#94a3b8" stroke-dasharray="3,3"/>
+      <rect x="420" y="24" width="310" height="44" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="432" y="42" font-size="11" font-weight="bold" fill="#1e3a8a">Presentation Layer</text>
+      <text x="432" y="56" font-size="9.5" fill="#64748b">Responsive cinema interface, client auth state, interactive cards</text>
+
+      <line x1="350" y1="126" x2="420" y2="126" stroke="#94a3b8" stroke-dasharray="3,3"/>
+      <rect x="420" y="104" width="310" height="44" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="432" y="122" font-size="11" font-weight="bold" fill="#831843">Application Layer</text>
+      <text x="432" y="136" font-size="9.5" fill="#64748b">Route handlers, CRUD endpoints, request/response cycle</text>
+
+      <line x1="350" y1="206" x2="420" y2="206" stroke="#94a3b8" stroke-dasharray="3,3"/>
+      <rect x="420" y="184" width="310" height="44" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="432" y="202" font-size="11" font-weight="bold" fill="#78350f">Middleware & Integrity Layer</text>
+      <text x="432" y="216" font-size="9.5" fill="#64748b">Bearer token authentication, ownership checks, 1-5 rating guards</text>
+
+      <line x1="350" y1="286" x2="420" y2="286" stroke="#94a3b8" stroke-dasharray="3,3"/>
+      <rect x="420" y="264" width="310" height="44" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+      <text x="432" y="282" font-size="11" font-weight="bold" fill="#064e3b">Data Access & Storage Layer</text>
+      <text x="432" y="296" font-size="9.5" fill="#64748b">Mongoose schemas, ObjectId refs, aggregation pipelines ($avg)</text>
+    </svg>
+  </div>
+
+  <!-- ER Diagram -->
+  <div id="diagram-er" class="diagram-container">
+    <div class="title">Entity-Relationship (ER) Diagram: Referenced Collections</div>
+    <svg width="100%" height="auto" viewBox="0 0 760 280" style="display: block;">
+      <defs>
+        <marker id="er-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 2 L 8 5 L 0 8 z" fill="#1e293b"/>
+        </marker>
+      </defs>
+
+      <!-- USER Entity -->
+      <rect x="30" y="40" width="180" height="190" rx="8" fill="#ffffff" stroke="#881337" stroke-width="2"/>
+      <rect x="30" y="40" width="180" height="34" rx="8 8 0 0" fill="#881337"/>
+      <text x="120" y="62" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">USER</text>
+      <text x="42" y="94" font-size="10.5" font-weight="bold" fill="#881337">PK  _id : ObjectId</text>
+      <text x="42" y="116" font-size="10.5" fill="#334155">    name : String</text>
+      <text x="42" y="138" font-size="10.5" fill="#334155">    email : String (UQ)</text>
+      <text x="42" y="160" font-size="10.5" fill="#334155">    password : Hash</text>
+      <text x="42" y="182" font-size="10.5" fill="#334155">    createdAt : Date</text>
+
+      <!-- REVIEW Entity -->
+      <rect x="290" y="30" width="180" height="210" rx="8" fill="#ffffff" stroke="#1e40af" stroke-width="2"/>
+      <rect x="290" y="30" width="180" height="34" rx="8 8 0 0" fill="#1e40af"/>
+      <text x="380" y="52" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">REVIEW</text>
+      <text x="302" y="84" font-size="10.5" font-weight="bold" fill="#1e40af">PK  _id : ObjectId</text>
+      <text x="302" y="106" font-size="10.5" font-weight="bold" fill="#047857">FK  movie : ObjectId</text>
+      <text x="302" y="128" font-size="10.5" font-weight="bold" fill="#881337">FK  user : ObjectId</text>
+      <text x="302" y="150" font-size="10.5" fill="#b45309">    rating : Number (1-5)</text>
+      <text x="302" y="172" font-size="10.5" fill="#334155">    reviewText : String</text>
+      <text x="302" y="194" font-size="10.5" fill="#334155">    createdAt : Date</text>
+      <text x="302" y="216" font-size="10.5" fill="#334155">    updatedAt : Date</text>
+
+      <!-- MOVIE Entity -->
+      <rect x="550" y="35" width="180" height="200" rx="8" fill="#ffffff" stroke="#047857" stroke-width="2"/>
+      <rect x="550" y="35" width="180" height="34" rx="8 8 0 0" fill="#047857"/>
+      <text x="640" y="57" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">MOVIE</text>
+      <text x="562" y="89" font-size="10.5" font-weight="bold" fill="#047857">PK  _id : ObjectId</text>
+      <text x="562" y="111" font-size="10.5" fill="#334155">    title : String</text>
+      <text x="562" y="133" font-size="10.5" fill="#334155">    genre : String</text>
+      <text x="562" y="155" font-size="10.5" fill="#334155">    releaseYear : Number</text>
+      <text x="562" y="177" font-size="10.5" fill="#334155">    posterUrl : String</text>
+      <text x="562" y="199" font-size="10.5" fill="#334155">    description : String</text>
+
+      <!-- Relationship lines -->
+      <line x1="210" y1="135" x2="290" y2="135" stroke="#1e293b" stroke-width="2" marker-end="url(#er-arr)"/>
+      <text x="250" y="125" font-size="10" font-weight="bold" fill="#881337" text-anchor="middle">1 : M</text>
+      <text x="250" y="150" font-size="8.5" fill="#64748b" text-anchor="middle">authors</text>
+
+      <line x1="550" y1="135" x2="470" y2="135" stroke="#1e293b" stroke-width="2" marker-end="url(#er-arr)"/>
+      <text x="510" y="125" font-size="10" font-weight="bold" fill="#047857" text-anchor="middle">1 : M</text>
+      <text x="510" y="150" font-size="8.5" fill="#64748b" text-anchor="middle">receives</text>
+    </svg>
+  </div>
+
+</body>
+</html>

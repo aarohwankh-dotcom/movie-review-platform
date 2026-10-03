@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineReview - Movie Review Platform | ITM Skills University</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-icon">🎬</span>
+        <span>CineReview</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active">Movies</a>
+        <div id="nav-auth-container" class="nav-links">
+          <!-- Populated dynamically by auth.js -->
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero & Dashboard Section -->
+  <section class="hero-section">
+    <div class="container">
+      <h1 class="hero-title">Discover, Rate & Review Cinema</h1>
+      <p class="hero-subtitle">
+        Explore audience ratings dynamically aggregated in real-time using MongoDB pipelines. Share your authentic critiques with secure ownership-backed permissions.
+      </p>
+
+      <!-- KPI Statistics Dashboard (Part 13) -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon">🎥</div>
+          <div>
+            <div class="kpi-value" id="stat-total-movies">-</div>
+            <div class="kpi-label">Catalogued Movies</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon gold">★</div>
+          <div>
+            <div class="kpi-value" id="stat-platform-avg">-</div>
+            <div class="kpi-label">Platform Avg Rating</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon rose">💬</div>
+          <div>
+            <div class="kpi-value" id="stat-total-reviews">-</div>
+            <div class="kpi-label">Verified Reviews</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content & Catalog -->
+  <main class="container">
+    <!-- Filter & Search Toolbar -->
+    <div class="toolbar">
+      <div class="filter-pills">
+        <button class="filter-pill active" data-genre="ALL">All Genres</button>
+        <button class="filter-pill" data-genre="Sci-Fi">Sci-Fi</button>
+        <button class="filter-pill" data-genre="Action">Action</button>
+        <button class="filter-pill" data-genre="Drama">Drama</button>
+        <button class="filter-pill" data-genre="Crime">Crime</button>
+        <button class="filter-pill" data-genre="Animation">Animation</button>
+      </div>
+
+      <div style="flex: 1; max-width: 320px;">
+        <input 
+          type="text" 
+          id="movie-search" 
+          class="form-control" 
+          placeholder="🔍 Search title or synopsis..." 
+          style="padding: 7px 14px; font-size: 13.5px;"
+        >
+      </div>
+    </div>
+
+    <!-- Movie Cards Grid -->
+    <div id="movie-grid" class="movie-grid">
+      <!-- Populated dynamically by movies.js -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <strong>CineReview Platform</strong> — Case Study No. 118
+      </div>
+      <div>
+        Aaroh Wankhade (Student ID: 150096726175) | ITM Skills University
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/movies.js"></script>
+</body>
+</html>

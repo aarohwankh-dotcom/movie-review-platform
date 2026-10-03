@@ -1,0 +1,407 @@
+{
+  "info": {
+    "_postman_id": "c88b2f90-118a-4c22-b5e1-8899aabbccdd",
+    "name": "Movie Review Platform - REST API Collection",
+    "description": "Comprehensive Postman test collection for Case Study No. 118: Movie Review Platform. Covers Authentication, Movie CRUD, Review CRUD, Mongoose Aggregation ($avg, $match, $group), Input Validation, and Ownership Authorization (403 Forbidden).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "1.1 Register User A (Aaroh)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201 Created', function () { pm.response.to.have.status(201); });",
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) { pm.environment.set('token', jsonData.token); pm.environment.set('userA_Id', jsonData.user._id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Aaroh Wankhade\",\n  \"email\": \"aaroh_test@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{baseURL}}/auth/register", "host": ["{{baseURL}}"], "path": ["auth", "register"] }
+          }
+        },
+        {
+          "name": "1.2 Register User B (Priya)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201 Created', function () { pm.response.to.have.status(201); });",
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.token) { pm.environment.set('userB_token', jsonData.token); pm.environment.set('userB_Id', jsonData.user._id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Priya Sharma\",\n  \"email\": \"priya_test@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{baseURL}}/auth/register", "host": ["{{baseURL}}"], "path": ["auth", "register"] }
+          }
+        },
+        {
+          "name": "1.3 Login User A",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200 OK', function () { pm.response.to.have.status(200); });",
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set('token', jsonData.token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"aaroh_test@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": { "raw": "{{baseURL}}/auth/login", "host": ["{{baseURL}}"], "path": ["auth", "login"] }
+          }
+        },
+        {
+          "name": "1.4 Get Current User Profile (/users/me)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": { "raw": "{{baseURL}}/users/me", "host": ["{{baseURL}}"], "path": ["users", "me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Movies",
+      "item": [
+        {
+          "name": "2.1 Get All Movies",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200 OK', function () { pm.response.to.have.status(200); });",
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data.length > 0) { pm.environment.set('movieId', jsonData.data[0]._id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseURL}}/movies", "host": ["{{baseURL}}"], "path": ["movies"] }
+          }
+        },
+        {
+          "name": "2.2 Get Single Movie by ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseURL}}/movies/{{movieId}}", "host": ["{{baseURL}}"], "path": ["movies", "{{movieId}}"] }
+          }
+        },
+        {
+          "name": "2.3 Create New Movie",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Blade Runner 2049\",\n  \"genre\": \"Sci-Fi\",\n  \"releaseYear\": 2017,\n  \"posterUrl\": \"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800\",\n  \"description\": \"Young Blade Runner K's discovery of a long-buried secret leads him to track down former Blade Runner Rick Deckard.\"\n}"
+            },
+            "url": { "raw": "{{baseURL}}/movies", "host": ["{{baseURL}}"], "path": ["movies"] }
+          }
+        },
+        {
+          "name": "2.4 Update Movie Details",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"releaseYear\": 2017\n}"
+            },
+            "url": { "raw": "{{baseURL}}/movies/{{movieId}}", "host": ["{{baseURL}}"], "path": ["movies", "{{movieId}}"] }
+          }
+        },
+        {
+          "name": "2.5 Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseURL}}/movies/dashboard/stats", "host": ["{{baseURL}}"], "path": ["movies", "dashboard", "stats"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Aggregation & Reviews",
+      "item": [
+        {
+          "name": "3.1 Get Average Rating Pipeline ($avg, $match, $group)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseURL}}/movies/{{movieId}}/average-rating", "host": ["{{baseURL}}"], "path": ["movies", "{{movieId}}", "average-rating"] }
+          }
+        },
+        {
+          "name": "3.2 Post Review by User A (Rating = 5)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201 Created', function () { pm.response.to.have.status(201); });",
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data) { pm.environment.set('reviewId', jsonData.data._id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 5,\n  \"reviewText\": \"A profound cinematic achievement. Hans Zimmer's score elevates every single frame.\"\n}"
+            },
+            "url": { "raw": "{{baseURL}}/movies/{{movieId}}/reviews", "host": ["{{baseURL}}"], "path": ["movies", "{{movieId}}", "reviews"] }
+          }
+        },
+        {
+          "name": "3.3 Post Review by User B (Rating = 3)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data) { pm.environment.set('userB_reviewId', jsonData.data._id); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{userB_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 3,\n  \"reviewText\": \"Visuals were stunning, but pacing was slightly dragged in the second act.\"\n}"
+            },
+            "url": { "raw": "{{baseURL}}/movies/{{movieId}}/reviews", "host": ["{{baseURL}}"], "path": ["movies", "{{movieId}}", "reviews"] }
+          }
+        },
+        {
+          "name": "3.4 Get All Reviews for Movie",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "{{baseURL}}/movies/{{movieId}}/reviews", "host": ["{{baseURL}}"], "path": ["movies", "{{movieId}}", "reviews"] }
+          }
+        },
+        {
+          "name": "3.5 Update Own Review (User A updates User A review)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 4,\n  \"reviewText\": \"Updated critique: Outstanding visual poetry, stands strong on rewatch.\"\n}"
+            },
+            "url": { "raw": "{{baseURL}}/reviews/{{reviewId}}", "host": ["{{baseURL}}"], "path": ["reviews", "{{reviewId}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Security & Validation Tests",
+      "item": [
+        {
+          "name": "4.1 Ownership Test: User A attempts to edit User B review (Expect 403 Forbidden)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 403 Forbidden', function () { pm.response.to.have.status(403); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 1,\n  \"reviewText\": \"Malicious update of another person's review.\"\n}"
+            },
+            "url": { "raw": "{{baseURL}}/reviews/{{userB_reviewId}}", "host": ["{{baseURL}}"], "path": ["reviews", "{{userB_reviewId}}"] }
+          }
+        },
+        {
+          "name": "4.2 Ownership Test: User A attempts to delete User B review (Expect 403 Forbidden)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 403 Forbidden', function () { pm.response.to.have.status(403); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "{{baseURL}}/reviews/{{userB_reviewId}}", "host": ["{{baseURL}}"], "path": ["reviews", "{{userB_reviewId}}"] }
+          }
+        },
+        {
+          "name": "4.3 Validation: Reject Rating Greater than 5 (Expect 400 Bad Request)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400 Bad Request', function () { pm.response.to.have.status(400); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 9,\n  \"reviewText\": \"Invalid rating value should be rejected\"\n}"
+            },
+            "url": { "raw": "{{baseURL}}/movies/{{movieId}}/reviews", "host": ["{{baseURL}}"], "path": ["movies", "{{movieId}}", "reviews"] }
+          }
+        },
+        {
+          "name": "4.4 Validation: Reject Empty Review Text (Expect 400 Bad Request)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 400 Bad Request', function () { pm.response.to.have.status(400); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 4,\n  \"reviewText\": \"\"\n}"
+            },
+            "url": { "raw": "{{baseURL}}/movies/{{movieId}}/reviews", "host": ["{{baseURL}}"], "path": ["movies", "{{movieId}}", "reviews"] }
+          }
+        },
+        {
+          "name": "4.5 Security: Request with Missing/Invalid JWT (Expect 401 Unauthorized)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 401 Unauthorized', function () { pm.response.to.have.status(401); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer invalid_garbage_token" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 5,\n  \"reviewText\": \"Should fail authentication\"\n}"
+            },
+            "url": { "raw": "{{baseURL}}/movies/{{movieId}}/reviews", "host": ["{{baseURL}}"], "path": ["movies", "{{movieId}}", "reviews"] }
+          }
+        },
+        {
+          "name": "4.6 Delete Own Review (Authorized Owner - 200 OK)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200 OK', function () { pm.response.to.have.status(200); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": { "raw": "{{baseURL}}/reviews/{{reviewId}}", "host": ["{{baseURL}}"], "path": ["reviews", "{{reviewId}}"] }
+          }
+        }
+      ]
+    }
+  ]
+}

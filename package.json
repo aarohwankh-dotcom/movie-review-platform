@@ -1,0 +1,24 @@
+{
+  "name": "movie-review-platform",
+  "version": "1.0.0",
+  "description": "Full-Stack Movie Review & Dynamic Rating Aggregation Platform - Semester 3 Backend Development Project",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "node --watch backend/server.js",
+    "test": "node backend/utils/testSuite.js",
+    "seed": "node backend/utils/seedData.js",
+    "report": "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --headless --disable-gpu --run-all-compositor-stages-before-draw --print-to-pdf=Movie_Review_Platform_Report.pdf Movie_Review_Platform_Report.html"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongodb",
+    "mongoose",
+    "jwt",
+    "rest-api",
+    "aggregation"
+  ],
+  "author": "Aaroh Wankhade (Student ID: 150096726175)",
+  "license": "ISC"
+}

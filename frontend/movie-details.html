@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Details - CineReview</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-icon">🎬</span>
+        <span>CineReview</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">← Back to Catalog</a>
+        <div id="nav-auth-container" class="nav-links">
+          <!-- Populated dynamically by auth.js -->
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Movie Header / Details Hero -->
+  <section class="details-hero">
+    <div class="container">
+      <div class="details-grid">
+        <div class="details-poster">
+          <img id="movie-poster" src="" alt="Movie Poster">
+        </div>
+        <div class="details-content">
+          <div class="details-meta-bar">
+            <span class="badge badge-genre" id="movie-genre">Genre</span>
+            <span class="badge badge-year" id="movie-year">Year</span>
+          </div>
+          <h1 id="movie-title">Loading Movie...</h1>
+          
+          <!-- MongoDB Aggregation Average Rating Box (Part 10 & 11) -->
+          <div class="agg-score-box">
+            <span class="agg-stars" id="movie-avg-stars">★★★★★</span>
+            <span class="agg-score" id="movie-avg-score">0.0</span>
+            <span class="agg-count" id="movie-review-count">0 reviews</span>
+          </div>
+
+          <p class="details-synopsis" id="movie-description">
+            Loading movie overview and synopsis...
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews & Community Section -->
+  <main class="container reviews-section">
+    <div class="section-header">
+      <h2>Audience Reviews & Critiques</h2>
+    </div>
+
+    <!-- Review Submission Form (Part 15) -->
+    <div class="card" id="review-form-card">
+      <h3 style="margin-bottom: 16px; font-size: 18px;">Leave Your Review</h3>
+      
+      <!-- Guest Notice -->
+      <div id="review-login-prompt" style="display: none; padding: 16px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: var(--radius-sm); font-size: 14px;">
+        💡 You must be logged in to post or rate. <a href="login.html" style="font-weight: 700; text-decoration: underline;">Log in to your account</a> or <a href="register.html">create one</a>.
+      </div>
+
+      <!-- Form for logged-in user -->
+      <form id="new-review-form">
+        <div class="form-group">
+          <label class="form-label">Your Rating (1 to 5 Stars)</label>
+          <div class="star-rating-select" id="star-selector">
+            <span class="star-item active" data-value="1">★</span>
+            <span class="star-item active" data-value="2">★</span>
+            <span class="star-item active" data-value="3">★</span>
+            <span class="star-item active" data-value="4">★</span>
+            <span class="star-item active" data-value="5">★</span>
+            <span id="selected-rating-text" style="font-size: 13.5px; color: var(--accent-gold); font-weight: 700; margin-left: 10px;">5 / 5 Stars</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="review-text-input">Review Commentary</label>
+          <textarea 
+            id="review-text-input" 
+            class="form-control" 
+            placeholder="What did you think of the direction, cinematography, performances, or screenplay? (Minimum 3 characters)"
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          Submit Review →
+        </button>
+      </form>
+    </div>
+
+    <!-- Reviews List Container (Part 11) -->
+    <div id="reviews-list-container">
+      <!-- Populated dynamically by reviews.js -->
+    </div>
+  </main>
+
+  <!-- Edit Review Modal (Part 8 & 11) -->
+  <div class="modal-backdrop" id="edit-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 style="font-size: 18px;">Edit Your Review</h3>
+        <button class="btn btn-outline btn-sm" onclick="closeEditModal()">✕</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Update Rating</label>
+        <select id="edit-rating-select" class="form-control">
+          <option value="5">★★★★★ (5 Stars - Masterpiece)</option>
+          <option value="4">★★★★☆ (4 Stars - Great)</option>
+          <option value="3">★★★☆☆ (3 Stars - Average)</option>
+          <option value="2">★★☆☆☆ (2 Stars - Mediocre)</option>
+          <option value="1">★☆☆☆☆ (1 Star - Poor)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Update Review Commentary</label>
+        <textarea id="edit-review-text" class="form-control" rows="4"></textarea>
+      </div>
+      <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px;">
+        <button class="btn btn-secondary btn-sm" onclick="closeEditModal()">Cancel</button>
+        <button class="btn btn-primary btn-sm" onclick="saveEditedReview()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <strong>CineReview Platform</strong> — Case Study No. 118
+      </div>
+      <div>
+        Aaroh Wankhade (Student ID: 150096726175) | ITM Skills University
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/reviews.js"></script>
+</body>
+</html>

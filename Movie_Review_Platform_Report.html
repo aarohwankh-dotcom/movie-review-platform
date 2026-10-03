@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie Review Platform - Case Study Report | Aaroh Wankhade</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 12mm 15mm 12mm 15mm;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #1f2937;
+      background: #ffffff;
+      line-height: 1.45;
+      font-size: 11pt;
+    }
+
+    /* Page container */
+    .page {
+      width: 100%;
+      height: 268mm;
+      max-height: 268mm;
+      page-break-after: always;
+      break-after: page;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .page-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Running Header */
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      border-bottom: 1.5px solid #111827;
+      margin-bottom: 14px;
+    }
+
+    .header-center-text {
+      text-align: center;
+      font-size: 10px;
+      color: #374151;
+      font-style: italic;
+      line-height: 1.3;
+    }
+
+    /* Running Footer */
+    .page-footer {
+      border-top: 1px solid #e5e7eb;
+      padding-top: 6px;
+      margin-top: 10px;
+      text-align: center;
+      font-size: 9pt;
+      color: #6b7280;
+    }
+
+    /* Headings */
+    h1, h2, h3, h4 {
+      color: #111827;
+      font-weight: 700;
+    }
+
+    h2.section-title {
+      font-size: 14pt;
+      margin-top: 6px;
+      margin-bottom: 8px;
+      border-bottom: 1.5px solid #e5e7eb;
+      padding-bottom: 3px;
+    }
+
+    h3.sub-title {
+      font-size: 10.5pt;
+      margin-top: 8px;
+      margin-bottom: 4px;
+      color: #1f2937;
+    }
+
+    p {
+      font-size: 9.5pt;
+      line-height: 1.45;
+      color: #374151;
+      margin-bottom: 6px;
+      text-align: justify;
+    }
+
+    ul {
+      margin-left: 20px;
+      margin-bottom: 8px;
+    }
+
+    li {
+      font-size: 9.2pt;
+      line-height: 1.4;
+      color: #374151;
+      margin-bottom: 3px;
+    }
+
+    /* Tables */
+    table.rep-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8.5pt;
+      margin: 6px 0 10px 0;
+    }
+
+    table.rep-table th {
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      padding: 6px 8px;
+      font-weight: 600;
+      color: #111827;
+      text-align: left;
+    }
+
+    table.rep-table td {
+      border: 1px solid #e5e7eb;
+      padding: 5px 8px;
+      color: #374151;
+      vertical-align: top;
+    }
+
+    table.rep-table tr:nth-child(even) {
+      background: #fafafa;
+    }
+
+    /* Code Block */
+    .code-box {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-family: Menlo, Monaco, "Courier New", monospace;
+      font-size: 7.8pt;
+      line-height: 1.35;
+      color: #0f172a;
+      margin: 6px 0 8px 0;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* Boxed Diagrams */
+    .diagram-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      padding: 8px 12px;
+      background: #ffffff;
+      margin: 6px 0 10px 0;
+    }
+
+    .diagram-caption {
+      text-align: center;
+      font-size: 8.5pt;
+      font-style: italic;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    /* Suggestion callout box */
+    .suggestion-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #16a34a;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 8.5pt;
+      color: #166534;
+      margin-top: 8px;
+    }
+
+    /* Screenshot container */
+    .screenshot-img {
+      width: 100%;
+      height: 98mm;
+      max-height: 98mm;
+      object-fit: contain;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      display: block;
+      margin: 2px auto 4px auto;
+      background: #000;
+    }
+
+    /* Pass Badge */
+    .metric-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #f0fdf4;
+      border: 1.5px solid #22c55e;
+      border-radius: 8px;
+      padding: 10px 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 1: COVER PAGE / STUDENT DETAILS                                  -->
+  <!-- ===================================================================== -->
+  <div class="page" style="padding: 10px 10px 0 10px;">
+    <div class="page-content" style="justify-content: flex-start;">
+      <!-- Top double black line -->
+      <div style="border-top: 2px solid #000; border-bottom: 1px solid #000; height: 3px; margin-bottom: 22px;"></div>
+
+      <!-- Top Logos -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding: 0 4px;">
+        <img src="assets/itm_logo.png" style="height: 52px; object-fit: contain;" alt="ITM Business School">
+        <img src="assets/futuretech_logo.png" style="height: 46px; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <!-- University & Department -->
+      <div style="text-align: center; margin-bottom: 35px;">
+        <div style="font-family: Georgia, 'Times New Roman', serif; font-size: 19pt; font-weight: 700; color: #000; letter-spacing: 0.5px;">ITM SKILLS UNIVERSITY</div>
+        <div style="font-family: Georgia, 'Times New Roman', serif; font-size: 12.5pt; color: #111; margin-top: 4px;">B.Tech Computer Science Engineering</div>
+      </div>
+
+      <!-- Thick black divider -->
+      <div style="border-bottom: 2.5px solid #000; margin-bottom: 40px;"></div>
+
+      <!-- Main Title -->
+      <div style="text-align: center; margin-bottom: 40px;">
+        <div style="font-family: Georgia, 'Times New Roman', serif; font-size: 36pt; font-weight: 800; color: #000; letter-spacing: 2px; line-height: 1.15;">
+          MOVIE REVIEW<br>PLATFORM
+        </div>
+        <div style="font-family: Georgia, 'Times New Roman', serif; font-size: 13pt; font-style: italic; color: #222; margin-top: 18px;">
+          A Movie Review Platform using Node.js, Express.js, MongoDB &amp; Mongoose
+        </div>
+      </div>
+
+      <!-- Thick black divider -->
+      <div style="border-bottom: 2.5px solid #000; margin-bottom: 40px;"></div>
+
+      <!-- Submission Text -->
+      <div style="text-align: center; margin-bottom: 40px; font-family: Georgia, 'Times New Roman', serif;">
+        <div style="font-size: 11pt; color: #222; margin-bottom: 6px;">Submitted in Partial Fulfilment of the Requirements for the Course:</div>
+        <div style="font-size: 13.5pt; font-weight: 700; color: #000;">Backend Development – Node.js, Express.js, MongoDB &amp; Mongoose</div>
+      </div>
+
+      <!-- 1. Students Details -->
+      <div style="margin-top: 15px;">
+        <div style="font-family: Georgia, 'Times New Roman', serif; font-size: 13.5pt; font-weight: 700; color: #000; border-bottom: 2px solid #000; padding-bottom: 4px; margin-bottom: 10px;">1. Students Details</div>
+        <div style="font-weight: 700; font-size: 10.5pt; margin-bottom: 8px; color: #111;">Submitted By:</div>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 10pt;">
+          <thead>
+            <tr style="background: #e5e7eb;">
+              <th style="border: 1px solid #d1d5db; padding: 8px 14px; text-align: left; font-weight: 700; color: #111;">Name</th>
+              <th style="border: 1px solid #d1d5db; padding: 8px 14px; text-align: left; font-weight: 700; color: #111;">Student ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border: 1px solid #e5e7eb; padding: 8px 14px; color: #111;">Aaroh Wankhade</td>
+              <td style="border: 1px solid #e5e7eb; padding: 8px 14px; color: #111;">150096726175</td>
+            </tr>
+          </tbody>
+        </table>
+        <table style="width: 100%; font-size: 10pt; line-height: 2.0; color: #111;">
+          <tr><td style="width: 150px; font-weight: 700;">Programme:</td><td>B.Tech Computer Science Engineering</td></tr>
+          <tr><td style="font-weight: 700;">Institution:</td><td>ITM Skills University</td></tr>
+          <tr><td style="font-weight: 700;">Academic Year:</td><td>2025–2029</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 2: TABLE OF CONTENTS & PROBLEM STATEMENT                         -->
+  <!-- ===================================================================== -->
+  <div class="page">
+    <div class="page-content">
+      <div class="page-header">
+        <img src="assets/itm_logo.png" style="height: 22px; width: auto; object-fit: contain;" alt="ITM Business School">
+        <div class="header-center-text">Movie Review Platform: REST API &amp; Dynamic Aggregation<br>Backend Development – Semester III</div>
+        <img src="assets/futuretech_logo.png" style="height: 20px; width: auto; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <h2 class="section-title">Contents</h2>
+      <table style="width: 100%; font-size: 9pt; border-collapse: collapse; margin-bottom: 12px; line-height: 1.6;">
+        <tr><td>1. Students Details</td><td style="text-align: right;">. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1</td></tr>
+        <tr><td>2. Problem Statement and Project Objectives</td><td style="text-align: right;">. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2</td></tr>
+        <tr><td>3. System Architecture and Workflow</td><td style="text-align: right;">. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3</td></tr>
+        <tr><td>4. Database Design</td><td style="text-align: right;">. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5</td></tr>
+        <tr><td>5. Backend Implementation</td><td style="text-align: right;">. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7</td></tr>
+        <tr><td>6. Execution Screenshots</td><td style="text-align: right;">. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10</td></tr>
+        <tr><td>7. Results and Observations</td><td style="text-align: right;">. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13</td></tr>
+        <tr><td>8. Conclusion and Future Scope</td><td style="text-align: right;">. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14</td></tr>
+      </table>
+
+      <h2 class="section-title">2. Problem Statement and Project Objectives</h2>
+      <h3 class="sub-title">2.1 Problem Statement</h3>
+      <p>A digital movie review platform wants users to browse movies and post reviews with a numerical rating. Each movie must display an accurate average rating computed dynamically from all submitted reviews. Furthermore, community integrity requires that a user must be able to edit or delete only the reviews they authored, preventing unauthorized tampering.</p>
+      <p>The system must ensure that:</p>
+      <ul>
+        <li>Movie and Review schemas are designed using Mongoose with normalized document references (<code>ObjectId</code>).</li>
+        <li>Current movie ratings are computed dynamically via MongoDB Aggregation (<code>$match</code>, <code>$group</code>, <code>$avg</code>), eliminating static counter desynchronization.</li>
+        <li>Strict ownership-based authorization middleware prevents non-authors from updating or deleting critiques (returning HTTP <code>403 Forbidden</code>).</li>
+        <li>Backend validation rigorously enforces rating values between 1 and 5 and rejects empty review commentary.</li>
+      </ul>
+
+      <h3 class="sub-title">2.2 Why This Project?</h3>
+      <p>Traditional web platforms that calculate aggregate metrics client-side or maintain static database counters suffer from race conditions, update anomalies, and desynchronization whenever reviews are modified or deleted. Concurrently, insufficient backend authorization often leads to security vulnerabilities where users manipulate foreign resource identifiers. A normalized NoSQL database paired with server-side ownership enforcement guarantees mathematical accuracy and absolute data security.</p>
+
+      <h3 class="sub-title">Proposed Solution</h3>
+      <p>A full-stack RESTful application built with Node.js, Express.js, MongoDB Atlas, and Mongoose ODM. An interactive dark cinematic console communicates via REST with JWT Bearer authentication. Dynamic aggregation pipelines calculate live scores, and custom middleware enforces ownership boundaries as shown in Figure 1.</p>
+
+      <div class="diagram-card" style="background: #fafafa; padding: 12px 10px; margin: 6px 0;">
+        <svg width="100%" height="auto" viewBox="0 0 680 75" style="display: block; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+          <defs>
+            <marker id="sol-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 2 L 8 5 L 0 8 z" fill="#111827"/></marker>
+          </defs>
+          <rect x="10" y="15" width="105" height="42" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+          <text x="62" y="34" font-size="8.5" font-weight="bold" fill="#881337" text-anchor="middle">CLIENT</text>
+          <text x="62" y="46" font-size="7.5" fill="#475569" text-anchor="middle">Cinematic UI</text>
+          <line x1="115" y1="36" x2="140" y2="36" stroke="#111827" stroke-width="1.2" marker-end="url(#sol-arr)"/>
+
+          <rect x="140" y="15" width="115" height="42" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+          <text x="197" y="34" font-size="8.5" font-weight="bold" fill="#881337" text-anchor="middle">EXPRESS REST</text>
+          <text x="197" y="46" font-size="7.5" fill="#475569" text-anchor="middle">Routing &amp; Endpoints</text>
+          <line x1="255" y1="36" x2="280" y2="36" stroke="#111827" stroke-width="1.2" marker-end="url(#sol-arr)"/>
+
+          <rect x="280" y="15" width="115" height="42" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+          <text x="337" y="34" font-size="8.5" font-weight="bold" fill="#881337" text-anchor="middle">MIDDLEWARE</text>
+          <text x="337" y="46" font-size="7.5" fill="#475569" text-anchor="middle">JWT &amp; 403 Ownership</text>
+          <line x1="395" y1="36" x2="420" y2="36" stroke="#111827" stroke-width="1.2" marker-end="url(#sol-arr)"/>
+
+          <rect x="420" y="15" width="115" height="42" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+          <text x="477" y="34" font-size="8.5" font-weight="bold" fill="#881337" text-anchor="middle">AGGREGATION</text>
+          <text x="477" y="46" font-size="7.5" fill="#475569" text-anchor="middle">$match &amp; $avg(rating)</text>
+          <line x1="535" y1="36" x2="560" y2="36" stroke="#111827" stroke-width="1.2" marker-end="url(#sol-arr)"/>
+
+          <rect x="560" y="15" width="110" height="42" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+          <text x="615" y="34" font-size="8.5" font-weight="bold" fill="#881337" text-anchor="middle">MONGODB</text>
+          <text x="615" y="46" font-size="7.5" fill="#475569" text-anchor="middle">Referenced Docs</text>
+        </svg>
+        <div class="diagram-caption">Figure 1: Proposed full-stack solution overview &amp; pipeline flow</div>
+      </div>
+    </div>
+    <div class="page-footer">Page 2</div>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 3: OBJECTIVES & WORKFLOWS                                        -->
+  <!-- ===================================================================== -->
+  <div class="page">
+    <div class="page-content">
+      <div class="page-header">
+        <img src="assets/itm_logo.png" style="height: 22px; width: auto; object-fit: contain;" alt="ITM Business School">
+        <div class="header-center-text">Movie Review Platform: REST API &amp; Dynamic Aggregation<br>Backend Development – Semester III</div>
+        <img src="assets/futuretech_logo.png" style="height: 20px; width: auto; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <h3 class="sub-title">2.3 Objectives</h3>
+      <table class="rep-table">
+        <thead>
+          <tr>
+            <th style="width: 8%;">No.</th>
+            <th style="width: 32%;">Objective</th>
+            <th style="width: 60%;">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Referenced Schemas</strong></td><td>Design Movie, Review, and User schemas using Mongoose with <code>ObjectId</code> references.</td></tr>
+          <tr><td>2</td><td><strong>REST CRUD Endpoints</strong></td><td>Implement complete Create, Read, Update, and Delete operations for movies and reviews.</td></tr>
+          <tr><td>3</td><td><strong>Ownership Authorization</strong></td><td>Enforce author verification via custom middleware; block unauthorized edits with 403 Forbidden.</td></tr>
+          <tr><td>4</td><td><strong>Dynamic Aggregation</strong></td><td>Compute average rating per movie using MongoDB aggregation pipeline (<code>$avg</code>, <code>$group</code>).</td></tr>
+          <tr><td>5</td><td><strong>Input Validation</strong></td><td>Strictly validate rating values (1–5) and require non-empty review text across all endpoints.</td></tr>
+          <tr><td>6</td><td><strong>JWT Authentication</strong></td><td>Secure routes using bearer token verification and bcrypt password hashing with salt rounds.</td></tr>
+        </tbody>
+      </table>
+
+      <h2 class="section-title">3. System Architecture and Workflow</h2>
+      <h3 class="sub-title">3.1 System Workflow</h3>
+      <p>The platform orchestrates user operations through two critical server pipelines: review submission with dynamic aggregation evaluation (Figure 2), and ownership-based modification authorization (Figure 3).</p>
+
+      <div style="font-size: 8.5pt; font-weight: bold; margin-bottom: 2px;">Review submission and dynamic aggregation workflow</div>
+      <div class="diagram-card" style="padding: 8px 10px; margin-bottom: 8px;">
+        <svg width="100%" height="auto" viewBox="0 0 680 75" style="display: block; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+          <defs>
+            <marker id="wf1-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 2 L 8 5 L 0 8 z" fill="#111827"/></marker>
+          </defs>
+          <circle cx="20" cy="36" r="10" fill="#881337"/><text x="20" y="40" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">1</text>
+          <rect x="36" y="16" width="95" height="40" rx="4" fill="#fff" stroke="#cbd5e1"/>
+          <text x="83" y="32" font-size="8" font-weight="bold" fill="#111" text-anchor="middle">Select Movie</text>
+          <text x="83" y="44" font-size="7" fill="#64748b" text-anchor="middle">1 to 5 Stars &amp; Text</text>
+          <line x1="131" y1="36" x2="148" y2="36" stroke="#111" stroke-width="1.2" marker-end="url(#wf1-arr)"/>
+
+          <circle cx="158" cy="36" r="10" fill="#881337"/><text x="158" y="40" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">2</text>
+          <rect x="174" y="16" width="95" height="40" rx="4" fill="#fff" stroke="#cbd5e1"/>
+          <text x="221" y="32" font-size="8" font-weight="bold" fill="#111" text-anchor="middle">POST Review</text>
+          <text x="221" y="44" font-size="7" fill="#64748b" text-anchor="middle">/movies/:id/reviews</text>
+          <line x1="269" y1="36" x2="286" y2="36" stroke="#111" stroke-width="1.2" marker-end="url(#wf1-arr)"/>
+
+          <circle cx="296" cy="36" r="10" fill="#881337"/><text x="296" y="40" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">3</text>
+          <rect x="312" y="16" width="95" height="40" rx="4" fill="#fff" stroke="#cbd5e1"/>
+          <text x="359" y="32" font-size="8" font-weight="bold" fill="#111" text-anchor="middle">Validate Payload</text>
+          <text x="359" y="44" font-size="7" fill="#64748b" text-anchor="middle">1 &le; Rating &le; 5</text>
+          <line x1="407" y1="36" x2="424" y2="36" stroke="#111" stroke-width="1.2" marker-end="url(#wf1-arr)"/>
+
+          <circle cx="434" cy="36" r="10" fill="#881337"/><text x="434" y="40" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">4</text>
+          <rect x="450" y="16" width="105" height="40" rx="4" fill="#fff" stroke="#cbd5e1"/>
+          <text x="502" y="32" font-size="8" font-weight="bold" fill="#111" text-anchor="middle">Mongoose Insert</text>
+          <text x="502" y="44" font-size="7" fill="#64748b" text-anchor="middle">Movie &amp; User Refs</text>
+          <line x1="555" y1="36" x2="572" y2="36" stroke="#111" stroke-width="1.2" marker-end="url(#wf1-arr)"/>
+
+          <circle cx="582" cy="36" r="10" fill="#881337"/><text x="582" y="40" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">5</text>
+          <rect x="598" y="16" width="75" height="40" rx="4" fill="#ecfdf5" stroke="#10b981"/>
+          <text x="635" y="32" font-size="8" font-weight="bold" fill="#047857" text-anchor="middle">Run Aggregation</text>
+          <text x="635" y="44" font-size="7" fill="#059669" text-anchor="middle">$avg Recalculated</text>
+        </svg>
+        <div class="diagram-caption">Figure 2: Review submission &amp; dynamic aggregation pipeline</div>
+      </div>
+
+      <div style="font-size: 8.5pt; font-weight: bold; margin-bottom: 2px;">Review ownership authorization workflow</div>
+      <div class="diagram-card" style="padding: 8px 10px;">
+        <svg width="100%" height="auto" viewBox="0 0 680 85" style="display: block; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+          <defs>
+            <marker id="wf2-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 2 L 8 5 L 0 8 z" fill="#111827"/></marker>
+          </defs>
+          <rect x="10" y="22" width="100" height="42" rx="4" fill="#fff" stroke="#cbd5e1"/>
+          <text x="60" y="38" font-size="8" font-weight="bold" fill="#111" text-anchor="middle">Client Request</text>
+          <text x="60" y="50" font-size="7" fill="#64748b" text-anchor="middle">PATCH/DELETE :id</text>
+          <line x1="110" y1="43" x2="135" y2="43" stroke="#111" stroke-width="1.2" marker-end="url(#wf2-arr)"/>
+
+          <rect x="135" y="22" width="110" height="42" rx="4" fill="#fff" stroke="#cbd5e1"/>
+          <text x="190" y="38" font-size="8" font-weight="bold" fill="#111" text-anchor="middle">JWT Verification</text>
+          <text x="190" y="50" font-size="7" fill="#64748b" text-anchor="middle">Extract req.user._id</text>
+          <line x1="245" y1="43" x2="270" y2="43" stroke="#111" stroke-width="1.2" marker-end="url(#wf2-arr)"/>
+
+          <rect x="270" y="22" width="115" height="42" rx="4" fill="#fff" stroke="#cbd5e1"/>
+          <text x="327" y="38" font-size="8" font-weight="bold" fill="#111" text-anchor="middle">Find Review Doc</text>
+          <text x="327" y="50" font-size="7" fill="#64748b" text-anchor="middle">Review.findById(:id)</text>
+          <line x1="385" y1="43" x2="415" y2="43" stroke="#111" stroke-width="1.2" marker-end="url(#wf2-arr)"/>
+
+          <!-- Decision Diamond -->
+          <polygon points="450,15 485,43 450,71 415,43" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+          <text x="450" y="42" font-size="7.5" font-weight="bold" fill="#92400e" text-anchor="middle">User ==</text>
+          <text x="450" y="52" font-size="7.5" font-weight="bold" fill="#92400e" text-anchor="middle">Owner?</text>
+
+          <line x1="485" y1="43" x2="540" y2="28" stroke="#16a34a" stroke-width="1.2" marker-end="url(#wf2-arr)"/>
+          <text x="508" y="28" font-size="7.5" font-weight="bold" fill="#16a34a">YES</text>
+          <rect x="540" y="10" width="125" height="34" rx="4" fill="#ecfdf5" stroke="#10b981"/>
+          <text x="602" y="25" font-size="8" font-weight="bold" fill="#047857" text-anchor="middle">Execute Operation</text>
+          <text x="602" y="36" font-size="7" fill="#059669" text-anchor="middle">200 OK &amp; Agg Update</text>
+
+          <line x1="485" y1="43" x2="540" y2="58" stroke="#dc2626" stroke-width="1.2" marker-end="url(#wf2-arr)"/>
+          <text x="508" y="60" font-size="7.5" font-weight="bold" fill="#dc2626">NO</text>
+          <rect x="540" y="48" width="125" height="32" rx="4" fill="#fef2f2" stroke="#ef4444"/>
+          <text x="602" y="62" font-size="8" font-weight="bold" fill="#b91c1c" text-anchor="middle">403 Forbidden</text>
+          <text x="602" y="72" font-size="7" fill="#dc2626" text-anchor="middle">Access Intercepted</text>
+        </svg>
+        <div class="diagram-caption">Figure 3: Review ownership authorization decision workflow</div>
+      </div>
+    </div>
+    <div class="page-footer">Page 3</div>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 4: PIPELINE STAGES & ARCHITECTURE                                -->
+  <!-- ===================================================================== -->
+  <div class="page">
+    <div class="page-content">
+      <div class="page-header">
+        <img src="assets/itm_logo.png" style="height: 22px; width: auto; object-fit: contain;" alt="ITM Business School">
+        <div class="header-center-text">Movie Review Platform: REST API &amp; Dynamic Aggregation<br>Backend Development – Semester III</div>
+        <img src="assets/futuretech_logo.png" style="height: 20px; width: auto; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <table class="rep-table">
+        <thead>
+          <tr>
+            <th style="width: 8%;">Step</th>
+            <th style="width: 25%;">Stage</th>
+            <th style="width: 67%;">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Cataloguing</strong></td><td>Movies initialized with title, genre, year, poster URL, and description constraints.</td></tr>
+          <tr><td>2</td><td><strong>Authentication</strong></td><td>Users register and authenticate; passwords hashed with bcrypt salt rounds; JWT issued.</td></tr>
+          <tr><td>3</td><td><strong>Review Submission</strong></td><td>Clients issue <code>POST /movies/:id/reviews</code> containing rating (1–5) and critique text.</td></tr>
+          <tr><td>4</td><td><strong>Payload Validation</strong></td><td>Middleware validates data types, rating bounds, and rejects empty or truncated text.</td></tr>
+          <tr><td>5</td><td><strong>Document Insertion</strong></td><td>Mongoose inserts review referencing Movie and User <code>ObjectId</code> keys.</td></tr>
+          <tr><td>6</td><td><strong>Dynamic Aggregation</strong></td><td>MongoDB aggregation pipeline computes <code>$avg(rating)</code> and total review counts in real time.</td></tr>
+          <tr><td>7</td><td><strong>Ownership Guard</strong></td><td>Mutations intercepted by <code>authorizeReviewOwner</code>, blocking unauthorized users with 403 Forbidden.</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-title">3.2 System Architecture</h3>
+      <p>The architecture follows a decoupled layered design (Figure 4). The interactive web frontend communicates with the backend API over REST. The API enforces input validation and transactional consistency, invoking the Mongoose ODM. Aggregation pipelines execute directly inside MongoDB Atlas to maintain dynamic mathematical accuracy.</p>
+
+      <div class="diagram-card" style="background: #fafafa; padding: 10px 8px; margin: 4px 0 8px 0;">
+        <svg width="100%" height="auto" viewBox="0 0 680 270" style="display: block; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+          <defs>
+            <marker id="arch-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 2 L 8 5 L 0 8 z" fill="#374151"/></marker>
+          </defs>
+
+          <!-- Presentation Box -->
+          <rect x="25" y="10" width="220" height="44" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+          <text x="135" y="28" font-size="10" font-weight="bold" fill="#1e3a8a" text-anchor="middle">CineReview Web Console</text>
+          <text x="135" y="42" font-size="7.5" fill="#3b82f6" text-anchor="middle">Catalog grid, star rating selector &amp; live KPI metrics</text>
+
+          <line x1="135" y1="54" x2="135" y2="80" stroke="#374151" stroke-width="1.2" marker-end="url(#arch-arr)"/>
+          <text x="142" y="70" font-size="7.5" fill="#475569">HTTP / JSON (REST)</text>
+
+          <!-- Application Box -->
+          <rect x="25" y="80" width="220" height="44" rx="6" fill="#fdf2f8" stroke="#db2777" stroke-width="1.5"/>
+          <text x="135" y="98" font-size="10" font-weight="bold" fill="#831843" text-anchor="middle">Application API &amp; Controllers</text>
+          <text x="135" y="112" font-size="7.5" fill="#be185d" text-anchor="middle">Route handlers, movieController, reviewController</text>
+
+          <line x1="135" y1="124" x2="135" y2="150" stroke="#374151" stroke-width="1.2" marker-end="url(#arch-arr)"/>
+          <text x="142" y="140" font-size="7.5" fill="#475569">JWT &amp; Ownership Verification</text>
+
+          <!-- Security Box -->
+          <rect x="25" y="150" width="220" height="44" rx="6" fill="#fffbeb" stroke="#d97706" stroke-width="1.5"/>
+          <text x="135" y="168" font-size="10" font-weight="bold" fill="#78350f" text-anchor="middle">Security &amp; Integrity Engine</text>
+          <text x="135" y="182" font-size="7.5" fill="#b45309" text-anchor="middle">authMiddleware, authorizeReviewOwner (403)</text>
+
+          <line x1="135" y1="194" x2="135" y2="220" stroke="#374151" stroke-width="1.2" marker-end="url(#arch-arr)"/>
+          <text x="142" y="210" font-size="7.5" fill="#475569">Mongoose Driver Queries</text>
+
+          <!-- Database Box -->
+          <rect x="25" y="220" width="220" height="44" rx="6" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+          <text x="135" y="238" font-size="10" font-weight="bold" fill="#064e3b" text-anchor="middle">MongoDB Atlas / Cloud Storage</text>
+          <text x="135" y="252" font-size="7.5" fill="#047857" text-anchor="middle">Referenced collections: Users, Movies, Reviews</text>
+
+          <!-- Layer Labels Right Side -->
+          <line x1="245" y1="32" x2="445" y2="32" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4"/>
+          <rect x="445" y="10" width="220" height="44" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+          <text x="457" y="28" font-size="9.5" font-weight="bold" fill="#881337">Presentation layer</text>
+          <text x="457" y="42" font-size="7.5" fill="#475569">Responsive UI, client token handling, rating stars</text>
+
+          <line x1="245" y1="102" x2="445" y2="102" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4"/>
+          <rect x="445" y="80" width="220" height="44" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+          <text x="457" y="98" font-size="9.5" font-weight="bold" fill="#881337">Application layer</text>
+          <text x="457" y="112" font-size="7.5" fill="#475569">Express routes, CRUD handlers, JSON formatting</text>
+
+          <line x1="245" y1="172" x2="445" y2="172" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4"/>
+          <rect x="445" y="150" width="220" height="44" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+          <text x="457" y="168" font-size="9.5" font-weight="bold" fill="#881337">Security layer</text>
+          <text x="457" y="182" font-size="7.5" fill="#475569">JWT validation, review ownership enforcement (403)</text>
+
+          <line x1="245" y1="242" x2="445" y2="242" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4"/>
+          <rect x="445" y="220" width="220" height="44" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+          <text x="457" y="238" font-size="9.5" font-weight="bold" fill="#881337">Data-access &amp; storage layer</text>
+          <text x="457" y="252" font-size="7.5" fill="#475569">Mongoose schemas, ObjectId refs, aggregation engine</text>
+        </svg>
+        <div class="diagram-caption" style="margin-top: 4px;">Figure 4: System architecture</div>
+      </div>
+    </div>
+    <div class="page-footer">Page 4</div>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 5: TECH STACK & DATABASE DESIGN                                  -->
+  <!-- ===================================================================== -->
+  <div class="page">
+    <div class="page-content">
+      <div class="page-header">
+        <img src="assets/itm_logo.png" style="height: 22px; width: auto; object-fit: contain;" alt="ITM Business School">
+        <div class="header-center-text">Movie Review Platform: REST API &amp; Dynamic Aggregation<br>Backend Development – Semester III</div>
+        <img src="assets/futuretech_logo.png" style="height: 20px; width: auto; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <h3 class="sub-title">3.3 Technology Stack</h3>
+      <table class="rep-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Layer</th>
+            <th style="width: 30%;">Technology</th>
+            <th style="width: 45%;">Role in Academic Implementation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Frontend UI</td><td>HTML5, Vanilla CSS3, JS</td><td>Cinematic dashboard, star selector &amp; live REST fetch operations</td></tr>
+          <tr><td>Backend Framework</td><td>Node.js &amp; Express.js (v4.21)</td><td>Asynchronous REST routing, middleware pipelines &amp; controllers</td></tr>
+          <tr><td>Database Engine</td><td>MongoDB Atlas / NoSQL</td><td>Cloud document storage, dynamic schema flexibility</td></tr>
+          <tr><td>Object Modeling</td><td>Mongoose (v8.7)</td><td>Schema definitions, validation rules, <code>ObjectId</code> references</td></tr>
+          <tr><td>Authentication</td><td>JWT &amp; bcryptjs</td><td>Stateless Bearer token issuance &amp; salted password hashing</td></tr>
+          <tr><td>Aggregation Engine</td><td>MongoDB Aggregation ($avg)</td><td>Dynamic real-time mathematical average rating calculation</td></tr>
+          <tr><td>Execution CLI</td><td>Zsh / Bash Shell</td><td>Automated one-click test &amp; startup runner (<code>run.sh</code>)</td></tr>
+        </tbody>
+      </table>
+
+      <h2 class="section-title">4. Database Design</h2>
+      <h3 class="sub-title">4.1 Main Entities</h3>
+      <table class="rep-table">
+        <thead>
+          <tr>
+            <th style="width: 22%;">Entity</th>
+            <th style="width: 78%;">Purpose &amp; Field Structure</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>User</strong></td><td>Stores user credentials, full name, email (unique), hashed password, and registration date.</td></tr>
+          <tr><td><strong>Movie</strong></td><td>Stores film catalog information: title, synopsis, genre, release year, poster image URL, and author reference.</td></tr>
+          <tr><td><strong>Review</strong></td><td>Transactional critique record referencing Movie and User; stores rating (1–5), commentary text, and audit timestamps.</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-title">4.2 Relationships</h3>
+      <table class="rep-table">
+        <thead>
+          <tr>
+            <th style="width: 30%;">Relationship</th>
+            <th style="width: 18%;">Cardinality</th>
+            <th style="width: 52%;">Explanation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>User &rarr; Review</td><td>1 : M</td><td>One user can author multiple critiques across different catalogued movies.</td></tr>
+          <tr><td>Movie &rarr; Review</td><td>1 : M</td><td>One movie document receives multiple reviews from various platform members.</td></tr>
+          <tr><td>User &rarr; Movie</td><td>1 : M</td><td>One registered user or administrator can catalogue multiple movies into the system.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="page-footer">Page 5</div>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 6: ER DIAGRAM & SCHEMA CONSTRAINTS                               -->
+  <!-- ===================================================================== -->
+  <div class="page">
+    <div class="page-content">
+      <div class="page-header">
+        <img src="assets/itm_logo.png" style="height: 22px; width: auto; object-fit: contain;" alt="ITM Business School">
+        <div class="header-center-text">Movie Review Platform: REST API &amp; Dynamic Aggregation<br>Backend Development – Semester III</div>
+        <img src="assets/futuretech_logo.png" style="height: 20px; width: auto; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <h3 class="sub-title">4.3 ER Diagram</h3>
+      <p>Figure 5 illustrates the database entities with their primary keys, foreign key <code>ObjectId</code> references, and connecting cardinality relationships. Referencing parent documents by their immutable 12-byte identifiers eliminates multi-row duplication and prevents data desynchronization.</p>
+
+      <div class="diagram-card" style="padding: 10px 8px; margin: 4px 0 10px 0;">
+        <svg width="100%" height="auto" viewBox="0 0 680 180" style="display: block; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+          <defs>
+            <marker id="er-arr2" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 2 L 8 5 L 0 8 z" fill="#1e293b"/></marker>
+          </defs>
+
+          <!-- USER BOX -->
+          <rect x="20" y="15" width="180" height="150" rx="6" fill="#fff" stroke="#881337" stroke-width="1.5"/>
+          <rect x="20" y="15" width="180" height="26" rx="6 6 0 0" fill="#881337"/>
+          <text x="110" y="32" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle">USER</text>
+          <text x="30" y="56" font-size="8.5" font-weight="bold" fill="#881337">PK  _id : ObjectId</text>
+          <text x="30" y="74" font-size="8.5" fill="#334155">    name : String</text>
+          <text x="30" y="92" font-size="8.5" fill="#334155">    email : String (Unique)</text>
+          <text x="30" y="110" font-size="8.5" fill="#334155">    password : Hash</text>
+          <text x="30" y="128" font-size="8.5" fill="#334155">    createdAt : Date</text>
+
+          <!-- REVIEW BOX -->
+          <rect x="250" y="10" width="180" height="160" rx="6" fill="#fff" stroke="#1e40af" stroke-width="1.5"/>
+          <rect x="250" y="10" width="180" height="26" rx="6 6 0 0" fill="#1e40af"/>
+          <text x="340" y="27" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle">REVIEW</text>
+          <text x="260" y="50" font-size="8.5" font-weight="bold" fill="#1e40af">PK  _id : ObjectId</text>
+          <text x="260" y="68" font-size="8.5" font-weight="bold" fill="#047857">FK  movie : ObjectId</text>
+          <text x="260" y="86" font-size="8.5" font-weight="bold" fill="#881337">FK  user : ObjectId</text>
+          <text x="260" y="104" font-size="8.5" fill="#b45309">    rating : Number (1-5)</text>
+          <text x="260" y="122" font-size="8.5" fill="#334155">    reviewText : String</text>
+          <text x="260" y="140" font-size="8.5" fill="#334155">    createdAt : Date</text>
+          <text x="260" y="156" font-size="8.5" fill="#334155">    updatedAt : Date</text>
+
+          <!-- MOVIE BOX -->
+          <rect x="480" y="15" width="180" height="150" rx="6" fill="#fff" stroke="#047857" stroke-width="1.5"/>
+          <rect x="480" y="15" width="180" height="26" rx="6 6 0 0" fill="#047857"/>
+          <text x="570" y="32" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle">MOVIE</text>
+          <text x="490" y="56" font-size="8.5" font-weight="bold" fill="#047857">PK  _id : ObjectId</text>
+          <text x="490" y="74" font-size="8.5" fill="#334155">    title : String</text>
+          <text x="490" y="92" font-size="8.5" fill="#334155">    genre : String</text>
+          <text x="490" y="110" font-size="8.5" fill="#334155">    releaseYear : Number</text>
+          <text x="490" y="128" font-size="8.5" fill="#334155">    posterUrl : String</text>
+          <text x="490" y="146" font-size="8.5" fill="#334155">    description : String</text>
+
+          <!-- Connecting Arrows -->
+          <line x1="200" y1="88" x2="250" y2="88" stroke="#1e293b" stroke-width="1.5" marker-end="url(#er-arr2)"/>
+          <text x="225" y="80" font-size="8" font-weight="bold" fill="#881337" text-anchor="middle">1 : M</text>
+          <text x="225" y="100" font-size="7" fill="#64748b" text-anchor="middle">authors</text>
+
+          <line x1="480" y1="88" x2="430" y2="88" stroke="#1e293b" stroke-width="1.5" marker-end="url(#er-arr2)"/>
+          <text x="455" y="80" font-size="8" font-weight="bold" fill="#047857" text-anchor="middle">1 : M</text>
+          <text x="455" y="100" font-size="7" fill="#64748b" text-anchor="middle">receives</text>
+        </svg>
+        <div class="diagram-caption">Figure 5: Entity-relationship diagram of CineReview collections</div>
+      </div>
+
+      <h3 class="sub-title">4.4 Schema Structure &amp; Normalization</h3>
+      <table class="rep-table">
+        <thead>
+          <tr>
+            <th style="width: 20%;">Collection</th>
+            <th style="width: 32%;">Key Attributes</th>
+            <th style="width: 48%;">Constraints &amp; References</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>users</strong></td><td><code>_id</code> (PK), <code>name</code>, <code>email</code>, <code>password</code></td><td><code>UNIQUE(email)</code>, regex format check, bcrypt password hashing</td></tr>
+          <tr><td><strong>movies</strong></td><td><code>_id</code> (PK), <code>title</code>, <code>genre</code>, <code>releaseYear</code></td><td><code>CHECK(releaseYear &ge; 1888)</code>, <code>FK(createdBy &rarr; users)</code></td></tr>
+          <tr><td><strong>reviews</strong></td><td><code>_id</code> (PK), <code>movie</code>, <code>user</code>, <code>rating</code></td><td><code>FK(movie &rarr; movies)</code>, <code>FK(user &rarr; users)</code>, <code>CHECK(1 &le; rating &le; 5)</code>, <code>minlength(3)</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="page-footer">Page 6</div>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 7: BACKEND IMPLEMENTATION & REST APIS                            -->
+  <!-- ===================================================================== -->
+  <div class="page">
+    <div class="page-content">
+      <div class="page-header">
+        <img src="assets/itm_logo.png" style="height: 22px; width: auto; object-fit: contain;" alt="ITM Business School">
+        <div class="header-center-text">Movie Review Platform: REST API &amp; Dynamic Aggregation<br>Backend Development – Semester III</div>
+        <img src="assets/futuretech_logo.png" style="height: 20px; width: auto; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <h2 class="section-title">5. Backend Implementation</h2>
+      <h3 class="sub-title">5.1 Database Operations &amp; REST APIs</h3>
+      <table class="rep-table">
+        <thead>
+          <tr>
+            <th style="width: 14%;">Method</th>
+            <th style="width: 36%;">Endpoint / Operation</th>
+            <th style="width: 35%;">Purpose</th>
+            <th style="width: 15%;">Access</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>POST</code></td><td><code>/api/auth/register</code></td><td>Register account with bcrypt hashed password</td><td>Public</td></tr>
+          <tr><td><code>POST</code></td><td><code>/api/auth/login</code></td><td>Authenticate credentials &amp; issue signed JWT</td><td>Public</td></tr>
+          <tr><td><code>GET</code></td><td><code>/api/movies</code></td><td>Fetch all movies with live aggregated scores</td><td>Public</td></tr>
+          <tr><td><code>GET</code></td><td><code>/api/movies/:id</code></td><td>Retrieve movie details &amp; populated reviews</td><td>Public</td></tr>
+          <tr><td><code>GET</code></td><td><code>/api/movies/:id/average-rating</code></td><td>Compute average rating via MongoDB aggregation</td><td>Public</td></tr>
+          <tr><td><code>POST</code></td><td><code>/api/movies/:id/reviews</code></td><td>Post critique referencing Movie &amp; User</td><td>Private (JWT)</td></tr>
+          <tr><td><code>PATCH</code></td><td><code>/api/reviews/:id</code></td><td>Update rating and text (Author only)</td><td>Private (Owner)</td></tr>
+          <tr><td><code>DELETE</code></td><td><code>/api/reviews/:id</code></td><td>Delete review permanently (Author only)</td><td>Private (Owner)</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-title">5.2 Dynamic Average Rating Aggregation Pipeline (Case Study Part 10)</h3>
+      <p>Rather than storing a static counter that risks desynchronization upon edits, CineReview calculates real-time movie ratings directly from the Review collection via a two-stage aggregation pipeline:</p>
+
+      <div class="code-box">const computeMovieAverageRating = async (movieId) => {
+  const objectId = new mongoose.Types.ObjectId(movieId);
+  const stats = await Review.aggregate([
+    // Stage 1: Match reviews strictly for this specific movie
+    { $match: { movie: objectId } },
+    // Stage 2: Group reviews and compute arithmetic mean and total tally
+    {
+      $group: {
+        _id: '$movie',
+        averageRating: { $avg: '$rating' },
+        totalReviews: { $sum: 1 }
+      }
+    }
+  ]);
+  return stats.length > 0
+    ? { movieId: movieId.toString(), averageRating: Math.round(stats[0].averageRating * 10) / 10, totalReviews: stats[0].totalReviews }
+    : { movieId: movieId.toString(), averageRating: 0, totalReviews: 0 };
+};</div>
+
+      <h3 class="sub-title">5.3 Document Referencing &amp; Normalization</h3>
+      <p>Review documents store <code>ObjectId</code> references to <code>Movie</code> and <code>User</code> collections rather than duplicated strings. When querying, Mongoose executes <code>.populate('user', 'name email')</code> to dynamically assemble relational representations with minimal storage overhead.</p>
+    </div>
+    <div class="page-footer">Page 7</div>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 8: OWNERSHIP-BASED AUTHORIZATION                                 -->
+  <!-- ===================================================================== -->
+  <div class="page">
+    <div class="page-content">
+      <div class="page-header">
+        <img src="assets/itm_logo.png" style="height: 22px; width: auto; object-fit: contain;" alt="ITM Business School">
+        <div class="header-center-text">Movie Review Platform: REST API &amp; Dynamic Aggregation<br>Backend Development – Semester III</div>
+        <img src="assets/futuretech_logo.png" style="height: 20px; width: auto; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <h3 class="sub-title">5.4 Ownership-Based Authorization Middleware (Case Study Part 8)</h3>
+      <p>Ownership authorization is a core academic requirement. When User A creates Review #123, User B must never be permitted to edit or delete it. Custom middleware intercepts mutations and validates identity against the resource author:</p>
+
+      <div class="code-box">const authorizeReviewOwner = async (req, res, next) => {
+  try {
+    const reviewId = req.params.id;
+    const review = await Review.findById(reviewId);
+    if (!review) {
+      return res.status(404).json({ success: false, message: `Review not found with id: ${reviewId}` });
+    }
+    // Verify author: compare review.user foreign key with decoded req.user._id
+    const isOwner = review.user.toString() === req.user._id.toString();
+    if (!isOwner) {
+      return res.status(403).json({
+        success: false,
+        message: 'Forbidden: You are only authorized to edit or delete reviews authored by you',
+        reviewOwnerId: review.user,
+        requesterId: req.user._id
+      });
+    }
+    req.review = review;
+    next();
+  } catch (error) { next(error); }
+};</div>
+
+      <div class="diagram-card" style="padding: 10px; margin: 8px 0;">
+        <svg width="100%" height="auto" viewBox="0 0 680 50" style="display: block; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+          <defs>
+            <marker id="ow-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 2 L 8 5 L 0 8 z" fill="#111"/></marker>
+          </defs>
+          <rect x="5" y="6" width="110" height="38" rx="4" fill="#fff" stroke="#cbd5e1"/>
+          <text x="60" y="24" font-size="8" font-weight="bold" fill="#111" text-anchor="middle">Client PATCH / DELETE</text>
+          <text x="60" y="34" font-size="7" fill="#64748b" text-anchor="middle">Bearer Token</text>
+          <line x1="115" y1="25" x2="140" y2="25" stroke="#111" stroke-width="1.2" marker-end="url(#ow-arr)"/>
+
+          <rect x="140" y="6" width="115" height="38" rx="4" fill="#fff" stroke="#cbd5e1"/>
+          <text x="197" y="24" font-size="8" font-weight="bold" fill="#111" text-anchor="middle">authMiddleware</text>
+          <text x="197" y="34" font-size="7" fill="#64748b" text-anchor="middle">Extract req.user</text>
+          <line x1="255" y1="25" x2="280" y2="25" stroke="#111" stroke-width="1.2" marker-end="url(#ow-arr)"/>
+
+          <rect x="280" y="6" width="125" height="38" rx="4" fill="#fff" stroke="#cbd5e1"/>
+          <text x="342" y="24" font-size="8" font-weight="bold" fill="#111" text-anchor="middle">authorizeReviewOwner</text>
+          <text x="342" y="34" font-size="7" fill="#64748b" text-anchor="middle">Check review.user == req.user</text>
+          <line x1="405" y1="25" x2="430" y2="25" stroke="#111" stroke-width="1.2" marker-end="url(#ow-arr)"/>
+
+          <rect x="430" y="6" width="110" height="38" rx="4" fill="#ecfdf5" stroke="#10b981"/>
+          <text x="485" y="24" font-size="8" font-weight="bold" fill="#047857" text-anchor="middle">Owner Match</text>
+          <text x="485" y="34" font-size="7" fill="#059669" text-anchor="middle">next() &rarr; Controller</text>
+          <line x1="540" y1="25" x2="565" y2="25" stroke="#111" stroke-width="1.2" marker-end="url(#ow-arr)"/>
+
+          <rect x="565" y="6" width="110" height="38" rx="4" fill="#fef2f2" stroke="#ef4444"/>
+          <text x="620" y="24" font-size="8" font-weight="bold" fill="#b91c1c" text-anchor="middle">Mismatch Blocked</text>
+          <text x="620" y="34" font-size="7" fill="#dc2626" text-anchor="middle">403 Forbidden</text>
+        </svg>
+        <div class="diagram-caption">Figure 6: Ownership validation checkpoint pipeline</div>
+      </div>
+
+      <div class="suggestion-box">
+        <strong>Academic Security Note:</strong> Relying on frontend visibility toggles alone is completely insufficient. The Express backend enforces ownership authorization at the routing layer so malicious requests from curl or Postman are unconditionally rejected with HTTP 403.
+      </div>
+    </div>
+    <div class="page-footer">Page 8</div>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 9: AUTHENTICATION & VALIDATION                                   -->
+  <!-- ===================================================================== -->
+  <div class="page">
+    <div class="page-content">
+      <div class="page-header">
+        <img src="assets/itm_logo.png" style="height: 22px; width: auto; object-fit: contain;" alt="ITM Business School">
+        <div class="header-center-text">Movie Review Platform: REST API &amp; Dynamic Aggregation<br>Backend Development – Semester III</div>
+        <img src="assets/futuretech_logo.png" style="height: 20px; width: auto; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <h3 class="sub-title">5.5 JWT Authentication &amp; Password Hashing</h3>
+      <p>Passwords are protected using <code>bcryptjs</code> with 10 salt rounds executed inside a Mongoose pre-save hook. Upon login, the server signs a stateless JWT token containing the user's immutable identifier:</p>
+
+      <div class="code-box">// Pre-save hook hashes password before persisting to database
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+// Authentication middleware verifying Bearer tokens
+const protect = async (req, res, next) => {
+  if (req.headers.authorization &amp;&amp; req.headers.authorization.startsWith('Bearer')) {
+    const token = req.headers.authorization.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = await User.findById(decoded.id).select('-password');
+    return next();
+  }
+  return res.status(401).json({ success: false, message: 'Access denied: No token provided' });
+};</div>
+
+      <h3 class="sub-title">5.6 Requirements and How They Are Enforced</h3>
+      <table class="rep-table">
+        <thead>
+          <tr>
+            <th style="width: 32%;">Requirement</th>
+            <th style="width: 68%;">Mechanism &amp; Enforcement Layer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Rating Bounds (1–5)</strong></td><td>Middleware <code>validateReviewInput</code> checks <code>1 &le; rating &le; 5</code>; Mongoose schema enforces <code>min: 1, max: 5</code> (400 Bad Request).</td></tr>
+          <tr><td><strong>Required Review Text</strong></td><td>Rejects empty or whitespace strings; enforces minimum 3 characters (400 Bad Request).</td></tr>
+          <tr><td><strong>Ownership Authorization</strong></td><td>Middleware compares <code>review.user.toString() === req.user._id.toString()</code> (403 Forbidden).</td></tr>
+          <tr><td><strong>Live Average Recalculation</strong></td><td>MongoDB aggregation pipeline computes <code>$avg</code> directly from Review documents upon every request.</td></tr>
+          <tr><td><strong>Cascade Cleanup</strong></td><td>Deleting a movie document triggers <code>Review.deleteMany({ movie: id })</code> preventing orphaned critiques.</td></tr>
+          <tr><td><strong>Password Security</strong></td><td>Salted adaptive hash via <code>bcryptjs</code> with 10 rounds; passwords stripped from JSON returns.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="page-footer">Page 9</div>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 10: EXECUTION SCREENSHOTS (1 & 2)                                -->
+  <!-- ===================================================================== -->
+  <div class="page">
+    <div class="page-content">
+      <div class="page-header">
+        <img src="assets/itm_logo.png" style="height: 22px; width: auto; object-fit: contain;" alt="ITM Business School">
+        <div class="header-center-text">Movie Review Platform: REST API &amp; Dynamic Aggregation<br>Backend Development – Semester III</div>
+        <img src="assets/futuretech_logo.png" style="height: 20px; width: auto; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <h2 class="section-title">6. Execution Screenshots</h2>
+      <p style="margin-bottom: 6px;">This section presents authentic execution screenshots captured from the running web application, database aggregation endpoints, terminal runner, and Postman ownership authorization verification.</p>
+
+      <img src="assets/screenshots/screenshot1.png" class="screenshot-img" alt="Screenshot 1: Movie Dashboard">
+      <div class="diagram-caption" style="margin-bottom: 12px;">Screenshot 1: Movie Catalog &amp; Overview Dashboard (Live KPI Metrics &amp; Genre Filters)</div>
+
+      <img src="assets/screenshots/screenshot2.png" class="screenshot-img" alt="Screenshot 2: Movie Details with Dynamic Average Rating">
+      <div class="diagram-caption">Screenshot 2: Movie Details Page displaying Dynamic Average Rating calculated via MongoDB Aggregation</div>
+    </div>
+    <div class="page-footer">Page 10</div>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 11: EXECUTION SCREENSHOTS (3 & 4)                                -->
+  <!-- ===================================================================== -->
+  <div class="page">
+    <div class="page-content">
+      <div class="page-header">
+        <img src="assets/itm_logo.png" style="height: 22px; width: auto; object-fit: contain;" alt="ITM Business School">
+        <div class="header-center-text">Movie Review Platform: REST API &amp; Dynamic Aggregation<br>Backend Development – Semester III</div>
+        <img src="assets/futuretech_logo.png" style="height: 20px; width: auto; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <img src="assets/screenshots/screenshot3.png" class="screenshot-img" alt="Screenshot 3: Review Submission Form">
+      <div class="diagram-caption" style="margin-bottom: 14px;">Screenshot 3: Review Submission Form with Interactive 5-Star Rating Selector</div>
+
+      <img src="assets/screenshots/screenshot4.png" class="screenshot-img" alt="Screenshot 4: Review List with Owner Actions">
+      <div class="diagram-caption">Screenshot 4: Verified Review Card with 'YOU' Badge and Authorized Owner Actions (Edit &amp; Delete)</div>
+    </div>
+    <div class="page-footer">Page 11</div>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 12: EXECUTION SCREENSHOTS (5 & 6)                                -->
+  <!-- ===================================================================== -->
+  <div class="page">
+    <div class="page-content">
+      <div class="page-header">
+        <img src="assets/itm_logo.png" style="height: 22px; width: auto; object-fit: contain;" alt="ITM Business School">
+        <div class="header-center-text">Movie Review Platform: REST API &amp; Dynamic Aggregation<br>Backend Development – Semester III</div>
+        <img src="assets/futuretech_logo.png" style="height: 20px; width: auto; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <img src="assets/screenshots/screenshot5.png" class="screenshot-img" alt="Screenshot 5: Terminal Runner">
+      <div class="diagram-caption" style="margin-bottom: 14px;">Screenshot 5: Terminal Runner (bash run.sh executing schema, seeder &amp; 12/12 integration tests)</div>
+
+      <img src="assets/screenshots/screenshot6.png" class="screenshot-img" alt="Screenshot 6: Postman 403 Forbidden">
+      <div class="diagram-caption">Screenshot 6: Postman Ownership Authorization Verification (User A edits User B review &rarr; 403 Forbidden)</div>
+    </div>
+    <div class="page-footer">Page 12</div>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 13: RESULTS AND OBSERVATIONS                                     -->
+  <!-- ===================================================================== -->
+  <div class="page">
+    <div class="page-content">
+      <div class="page-header">
+        <img src="assets/itm_logo.png" style="height: 22px; width: auto; object-fit: contain;" alt="ITM Business School">
+        <div class="header-center-text">Movie Review Platform: REST API &amp; Dynamic Aggregation<br>Backend Development – Semester III</div>
+        <img src="assets/futuretech_logo.png" style="height: 20px; width: auto; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <h2 class="section-title">7. Results and Observations</h2>
+      <h3 class="sub-title">7.1 Results</h3>
+      <table class="rep-table">
+        <thead>
+          <tr>
+            <th style="width: 32%;">Feature</th>
+            <th style="width: 18%;">Result</th>
+            <th style="width: 32%;">Feature</th>
+            <th style="width: 18%;">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>User Registration</td><td><strong style="color: #16a34a;">Successful</strong></td><td>Dynamic Aggregation ($avg)</td><td><strong style="color: #16a34a;">Successful</strong></td></tr>
+          <tr><td>JWT Authentication</td><td><strong style="color: #16a34a;">Successful</strong></td><td>Ownership Authorization (403)</td><td><strong style="color: #16a34a;">Successful</strong></td></tr>
+          <tr><td>Bcrypt Password Hashing</td><td><strong style="color: #16a34a;">Successful</strong></td><td>Rating Validation (1–5)</td><td><strong style="color: #16a34a;">Successful</strong></td></tr>
+          <tr><td>Movie CRUD Operations</td><td><strong style="color: #16a34a;">Successful</strong></td><td>Required Review Text Guard</td><td><strong style="color: #16a34a;">Successful</strong></td></tr>
+          <tr><td>Review Creation &amp; Refs</td><td><strong style="color: #16a34a;">Successful</strong></td><td>Cascade Movie Review Cleanup</td><td><strong style="color: #16a34a;">Successful</strong></td></tr>
+        </tbody>
+      </table>
+
+      <div style="display: flex; justify-content: center; gap: 14px; margin: 10px 0;">
+        <div class="metric-badge">
+          <span style="font-size: 16pt; font-weight: 800; color: #16a34a;">100%</span>
+          <span style="font-size: 7.5pt; color: #15803d; font-weight: bold;">12/12 PASS</span>
+        </div>
+        <div class="metric-badge" style="background: #eff6ff; border-color: #3b82f6;">
+          <span style="font-size: 16pt; font-weight: 800; color: #1d4ed8;">12</span>
+          <span style="font-size: 7.5pt; color: #1e40af; font-weight: bold;">FEATURES TESTED</span>
+        </div>
+        <div class="metric-badge" style="background: #faf5ff; border-color: #a855f7;">
+          <span style="font-size: 16pt; font-weight: 800; color: #7e22ce;">3</span>
+          <span style="font-size: 7.5pt; color: #6b21a8; font-weight: bold;">SCHEMAS NORMALIZED</span>
+        </div>
+        <div class="metric-badge" style="background: #fff7ed; border-color: #f97316;">
+          <span style="font-size: 16pt; font-weight: 800; color: #c2410c;">0</span>
+          <span style="font-size: 7.5pt; color: #9a3412; font-weight: bold;">SECURITY LEAKS</span>
+        </div>
+      </div>
+
+      <h3 class="sub-title">7.2 Key Findings</h3>
+      <ol style="margin-left: 18px; font-size: 8.8pt; line-height: 1.45; color: #374151;">
+        <li><strong>Deterministic Precision:</strong> Calculating average ratings on-demand through MongoDB pipelines guarantees that modifications immediately reflect in platform scores without desynchronization risks.</li>
+        <li><strong>Server-Side Security:</strong> While hiding edit buttons in the frontend improves user experience, enforcing ownership validation inside Express middleware strictly prevents unauthorized API attacks.</li>
+        <li><strong>Schema Integrity:</strong> Mongoose document references (<code>ObjectId</code>) maintain clean separation between reviews and movies while allowing rapid aggregation across collections.</li>
+        <li><strong>Payload Resilience:</strong> Centralized validation intercepts non-numeric or out-of-range ratings before reaching the database layer, safeguarding data purity.</li>
+      </ol>
+    </div>
+    <div class="page-footer">Page 13</div>
+  </div>
+
+
+  <!-- ===================================================================== -->
+  <!-- PAGE 14: CONCLUSION AND FUTURE SCOPE                                  -->
+  <!-- ===================================================================== -->
+  <div class="page">
+    <div class="page-content">
+      <div class="page-header">
+        <img src="assets/itm_logo.png" style="height: 22px; width: auto; object-fit: contain;" alt="ITM Business School">
+        <div class="header-center-text">Movie Review Platform: REST API &amp; Dynamic Aggregation<br>Backend Development – Semester III</div>
+        <img src="assets/futuretech_logo.png" style="height: 20px; width: auto; object-fit: contain;" alt="School of FutureTech">
+      </div>
+
+      <h2 class="section-title">8. Conclusion and Future Scope</h2>
+      <h3 class="sub-title">8.1 Conclusion</h3>
+      <p>The Movie Review Platform fulfills all functional objectives specified in Case Study No. 118. The project successfully demonstrates full-stack REST API development, Mongoose referenced schema design, dynamic average rating calculation via MongoDB aggregation pipelines, JWT authentication with bcrypt password security, and server-side ownership-based authorization.</p>
+
+      <table class="rep-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Concept</th>
+            <th style="width: 25%;">Academic Learning</th>
+            <th style="width: 25%;">Concept</th>
+            <th style="width: 25%;">Academic Learning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Document References</td><td>Normalized schemas with <code>ObjectId</code></td><td>Aggregation Pipeline</td><td>Real-time <code>$avg</code> mathematical scores</td></tr>
+          <tr><td>Ownership Guard</td><td>Interception of foreign mutations (403)</td><td>JWT Bearer Tokens</td><td>Stateless sessionless request security</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-title">8.2 Future Scope</h3>
+      <p>The platform architecture is designed for modular scalability. The planned enhancement roadmap is outlined in Figure 7.</p>
+
+      <div class="diagram-card" style="padding: 10px 8px; margin: 6px 0 10px 0;">
+        <svg width="100%" height="auto" viewBox="0 0 680 75" style="display: block; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+          <defs>
+            <marker id="fut-arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 0 2 L 8 5 L 0 8 z" fill="#3b82f6"/></marker>
+          </defs>
+          <circle cx="45" cy="35" r="14" fill="#10b981"/><text x="45" y="39" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">&check;</text>
+          <text x="45" y="60" font-size="7.5" font-weight="bold" fill="#065f46" text-anchor="middle">v1.0 REST &amp; Agg</text>
+
+          <line x1="65" y1="35" x2="140" y2="35" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#fut-arr)"/>
+          <circle cx="160" cy="35" r="14" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+          <text x="160" y="39" font-size="9" fill="#1d4ed8" text-anchor="middle" font-weight="bold">P1</text>
+          <text x="160" y="60" font-size="7.5" font-weight="bold" fill="#1e40af" text-anchor="middle">Search &amp; Pagination</text>
+
+          <line x1="180" y1="35" x2="260" y2="35" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#fut-arr)"/>
+          <circle cx="280" cy="35" r="14" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+          <text x="280" y="39" font-size="9" fill="#1d4ed8" text-anchor="middle" font-weight="bold">P2</text>
+          <text x="280" y="60" font-size="7.5" font-weight="bold" fill="#1e40af" text-anchor="middle">Watchlist &amp; Likes</text>
+
+          <line x1="300" y1="35" x2="380" y2="35" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#fut-arr)"/>
+          <circle cx="400" cy="35" r="14" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+          <text x="400" y="39" font-size="9" fill="#1d4ed8" text-anchor="middle" font-weight="bold">P3</text>
+          <text x="400" y="60" font-size="7.5" font-weight="bold" fill="#1e40af" text-anchor="middle">Socket.IO Live Critiques</text>
+
+          <line x1="420" y1="35" x2="500" y2="35" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#fut-arr)"/>
+          <circle cx="520" cy="35" r="14" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+          <text x="520" y="39" font-size="9" fill="#1d4ed8" text-anchor="middle" font-weight="bold">P4</text>
+          <text x="520" y="60" font-size="7.5" font-weight="bold" fill="#1e40af" text-anchor="middle">Image Uploads (S3)</text>
+
+          <line x1="540" y1="35" x2="620" y2="35" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#fut-arr)"/>
+          <circle cx="640" cy="35" r="14" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+          <text x="640" y="39" font-size="9" fill="#1d4ed8" text-anchor="middle" font-weight="bold">P5</text>
+          <text x="640" y="60" font-size="7.5" font-weight="bold" fill="#1e40af" text-anchor="middle">Cloud Scale (Atlas)</text>
+        </svg>
+        <div class="diagram-caption">Figure 7: Future enhancement roadmap</div>
+      </div>
+
+      <ul>
+        <li><strong>Full-Text Search &amp; Cursor Pagination:</strong> Indexing movie titles and synopses with infinite scroll pagination.</li>
+        <li><strong>Real-Time Live Feed via Socket.IO:</strong> Broadcasting new critiques in real time without browser polling (Module 5 syllabus topic).</li>
+        <li><strong>User Watchlists &amp; Upvoting:</strong> Enabling community curation with helpfulness upvotes on critiques.</li>
+        <li><strong>Cloud Image Hosting:</strong> Direct cloud storage integration (AWS S3 or Cloudinary) for custom poster uploads.</li>
+      </ul>
+    </div>
+    <div class="page-footer">Page 14</div>
+  </div>
+
+</body>
+</html>

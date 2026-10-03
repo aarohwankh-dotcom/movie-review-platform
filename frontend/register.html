@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - CineReview Platform</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-icon">🎬</span>
+        <span>CineReview</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">Catalog</a>
+        <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Register Form Section -->
+  <main class="container" style="max-width: 480px; margin: 60px auto;">
+    <div class="card" style="padding: 32px;">
+      <h2 style="font-size: 24px; margin-bottom: 8px; text-align: center;">Create an Account</h2>
+      <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px; text-align: center;">
+        Join CineReview to post critiques and rate movies
+      </p>
+
+      <form id="register-form">
+        <div class="form-group">
+          <label class="form-label" for="reg-name">Full Name</label>
+          <input 
+            type="text" 
+            id="reg-name" 
+            class="form-control" 
+            placeholder="e.g. Aaroh Wankhade" 
+            required
+            minlength="2"
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-email">Email Address</label>
+          <input 
+            type="email" 
+            id="reg-email" 
+            class="form-control" 
+            placeholder="e.g. student@itm.edu" 
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="reg-password">Password</label>
+          <input 
+            type="password" 
+            id="reg-password" 
+            class="form-control" 
+            placeholder="At least 6 characters" 
+            required
+            minlength="6"
+          >
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+          Create Account →
+        </button>
+      </form>
+
+      <p style="text-align: center; font-size: 13.5px; color: var(--text-muted); margin-top: 20px;">
+        Already registered? <a href="login.html">Log In here</a>
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div><strong>CineReview</strong> — Semester 3 Academic Project</div>
+      <div>Aaroh Wankhade | ITM Skills University</div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+
+      try {
+        const res = await API.post('/auth/register', { name, email, password });
+        if (res.success && res.token) {
+          API.setAuth(res.token, res.user);
+          Auth.showToast('Account registered successfully! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 600);
+        }
+      } catch (err) {
+        Auth.showToast(err.message || 'Registration failed', 'error');
+      }
+    });
+  </script>
+</body>
+</html>
