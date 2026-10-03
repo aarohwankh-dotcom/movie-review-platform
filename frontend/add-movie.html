@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add New Movie - CineReview Platform</title>
+  <title>Catalogue Film — CineReview</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Apple Frosted Glass Navbar -->
   <nav class="navbar">
     <div class="container nav-container">
       <a href="index.html" class="brand-logo">
-        <span class="brand-icon">🎬</span>
+        <span class="brand-icon"></span>
         <span>CineReview</span>
       </a>
       <div class="nav-links">
@@ -24,11 +24,11 @@
     </div>
   </nav>
 
-  <!-- Add Movie Section -->
-  <main class="container" style="max-width: 640px; margin: 40px auto 60px auto;">
-    <div class="card" style="padding: 32px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2 style="font-size: 24px;">Catalogue a New Movie</h2>
+  <!-- Add Movie Card -->
+  <main class="container" style="max-width: 580px; margin: 50px auto 70px auto;">
+    <div class="card" style="padding: 36px 32px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h2 style="font-size: 24px; font-weight: 700; letter-spacing: -0.03em;">Add Film to Catalog</h2>
         <button type="button" class="btn btn-secondary btn-sm" onclick="populateSampleData()">
           ⚡ Auto-Fill Sample
         </button>
@@ -36,38 +36,36 @@
 
       <form id="add-movie-form">
         <div class="form-group">
-          <label class="form-label" for="movie-title-input">Movie Title *</label>
+          <label class="form-label" for="movie-title-input">Film Title</label>
           <input 
             type="text" 
             id="movie-title-input" 
             class="form-control" 
-            placeholder="e.g. Oppenheimer" 
+            placeholder="e.g. Parasite" 
             required
           >
         </div>
 
         <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
           <div>
-            <label class="form-label" for="movie-genre-input">Genre *</label>
+            <label class="form-label" for="movie-genre-input">Genre</label>
             <select id="movie-genre-input" class="form-control" required>
+              <option value="Drama">Drama</option>
               <option value="Sci-Fi">Sci-Fi</option>
               <option value="Action">Action</option>
-              <option value="Drama">Drama</option>
-              <option value="Thriller">Thriller</option>
               <option value="Crime">Crime</option>
-              <option value="Comedy">Comedy</option>
+              <option value="Thriller">Thriller</option>
               <option value="Animation">Animation</option>
-              <option value="Adventure">Adventure</option>
-              <option value="Horror">Horror</option>
+              <option value="Comedy">Comedy</option>
             </select>
           </div>
           <div>
-            <label class="form-label" for="movie-year-input">Release Year *</label>
+            <label class="form-label" for="movie-year-input">Release Year</label>
             <input 
               type="number" 
               id="movie-year-input" 
               class="form-control" 
-              placeholder="e.g. 2023" 
+              placeholder="e.g. 2019" 
               min="1888" 
               max="2100" 
               required
@@ -76,29 +74,29 @@
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="movie-poster-input">Poster Image URL *</label>
+          <label class="form-label" for="movie-poster-input">High-Resolution Poster URL</label>
           <input 
             type="url" 
             id="movie-poster-input" 
             class="form-control" 
-            placeholder="https://images.unsplash.com/..." 
+            placeholder="https://image.tmdb.org/..." 
             required
           >
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="movie-desc-input">Synopsis & Description *</label>
+          <label class="form-label" for="movie-desc-input">Synopsis &amp; Overview</label>
           <textarea 
             id="movie-desc-input" 
             class="form-control" 
             rows="4" 
-            placeholder="Brief overview of the movie plot, direction, and cast..." 
+            placeholder="Synopsis exploring premise, themes, and narrative arc..." 
             required
           ></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg" style="width: 100%; margin-top: 10px;">
-          Add Movie to Catalog →
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; margin-top: 10px;">
+          Catalogue Film →
         </button>
       </form>
     </div>
@@ -118,11 +116,11 @@
   <script src="js/auth.js"></script>
   <script>
     function populateSampleData() {
-      document.getElementById('movie-title-input').value = 'Dune: Part Two';
-      document.getElementById('movie-genre-input').value = 'Sci-Fi';
-      document.getElementById('movie-year-input').value = '2024';
-      document.getElementById('movie-poster-input').value = 'https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?w=800&auto=format&fit=crop';
-      document.getElementById('movie-desc-input').value = 'Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family, facing a choice between love and the fate of the universe.';
+      document.getElementById('movie-title-input').value = 'Parasite';
+      document.getElementById('movie-genre-input').value = 'Drama';
+      document.getElementById('movie-year-input').value = '2019';
+      document.getElementById('movie-poster-input').value = 'https://image.tmdb.org/t/p/w780/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg';
+      document.getElementById('movie-desc-input').value = 'Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan in Bong Joon-ho\'s Academy Award-winning masterpiece.';
     }
 
     document.getElementById('add-movie-form').addEventListener('submit', async (e) => {
@@ -130,8 +128,8 @@
       
       const currentUser = API.getCurrentUser();
       if (!currentUser) {
-        Auth.showToast('Please log in first to add a movie', 'error');
-        setTimeout(() => window.location.href = 'login.html', 1000);
+        Auth.showToast('Please sign in to add a film', 'error');
+        setTimeout(() => window.location.href = 'login.html', 900);
         return;
       }
 
@@ -151,13 +149,13 @@
         });
 
         if (res.success && res.data) {
-          Auth.showToast('Movie added successfully!', 'success');
+          Auth.showToast('Film catalogued successfully', 'success');
           setTimeout(() => {
             window.location.href = `movie-details.html?id=${res.data._id}`;
           }, 800);
         }
       } catch (err) {
-        Auth.showToast(err.message || 'Failed to add movie', 'error');
+        Auth.showToast(err.message || 'Failed to add film', 'error');
       }
     });
   </script>

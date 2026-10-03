@@ -22,8 +22,19 @@ const runTests = async () => {
   console.log('🧪 STARTING COMPREHENSIVE AUTOMATED VERIFICATION SUITE');
   console.log('===========================================================');
 
-  const server = await startServer();
+  let server;
   const BASE_URL = 'http://localhost:5001/api';
+
+  try {
+    const ping = await fetch(`${BASE_URL}/movies`);
+    if (ping.ok) {
+      console.log('  ℹ️ Server already active on port 5001. Connecting to running instance.');
+    } else {
+      server = await startServer();
+    }
+  } catch (err) {
+    server = await startServer();
+  }
 
   let userAToken = '';
   let userBToken = '';
@@ -248,7 +259,9 @@ const runTests = async () => {
   } catch (err) {
     console.error(`Test Suite encountered error: ${err.message}`, err);
   } finally {
-    server.close();
+    if (server) {
+      server.close();
+    }
     process.exit(0);
   }
 };

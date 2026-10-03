@@ -3,41 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - CineReview Platform</title>
+  <title>Sign In — CineReview</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Apple Frosted Glass Navbar -->
   <nav class="navbar">
     <div class="container nav-container">
       <a href="index.html" class="brand-logo">
-        <span class="brand-icon">🎬</span>
+        <span class="brand-icon"></span>
         <span>CineReview</span>
       </a>
       <div class="nav-links">
         <a href="index.html" class="nav-link">Catalog</a>
-        <a href="register.html" class="btn btn-outline btn-sm">Sign Up</a>
+        <a href="register.html" class="btn btn-outline btn-sm">Create Account</a>
       </div>
     </div>
   </nav>
 
-  <!-- Login Form Section -->
-  <main class="container" style="max-width: 480px; margin: 60px auto;">
-    <div class="card" style="padding: 32px;">
-      <h2 style="font-size: 24px; margin-bottom: 8px; text-align: center;">Welcome Back</h2>
-      <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px; text-align: center;">
-        Sign in to post critiques and manage your reviews
+  <!-- Login Card (Apple ID Aesthetic) -->
+  <main class="container" style="max-width: 440px; margin: 70px auto;">
+    <div class="card" style="padding: 36px 32px; text-align: center;">
+      <div style="font-size: 32px; margin-bottom: 12px;"></div>
+      <h2 style="font-size: 24px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 6px;">Sign in to CineReview</h2>
+      <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 28px;">
+        Publish critiques and manage your reviews with verified ownership
       </p>
 
-      <form id="login-form">
+      <form id="login-form" style="text-align: left;">
         <div class="form-group">
           <label class="form-label" for="login-email">Email Address</label>
           <input 
             type="email" 
             id="login-email" 
             class="form-control" 
-            placeholder="e.g. aaroh@example.com" 
+            placeholder="name@example.com" 
             required
           >
         </div>
@@ -53,28 +54,28 @@
           >
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
-          Log In →
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 11px; margin-top: 8px;">
+          Continue →
         </button>
       </form>
 
-      <!-- Quick-fill demo credentials for seamless viva presentation -->
-      <div style="margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border-color);">
-        <p style="font-size: 12px; color: var(--text-dim); margin-bottom: 8px; text-align: center; text-transform: uppercase; letter-spacing: 0.5px;">
-          Quick Demo Accounts (Click to Fill)
+      <!-- Quick Demo Accounts for Seamless Faculty Evaluation -->
+      <div style="margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--border-subtle);">
+        <p style="font-size: 11.5px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-bottom: 10px;">
+          Fast Demo Access (Click to Fill)
         </p>
         <div style="display: flex; gap: 8px;">
-          <button type="button" class="btn btn-secondary btn-sm" style="flex: 1; font-size: 11.5px;" onclick="fillDemo('aaroh@example.com')">
-            👤 User A: Aaroh
+          <button type="button" class="btn btn-secondary btn-sm" style="flex: 1;" onclick="fillDemo('aaroh@example.com')">
+            👤 User A (Aaroh)
           </button>
-          <button type="button" class="btn btn-secondary btn-sm" style="flex: 1; font-size: 11.5px;" onclick="fillDemo('priya@example.com')">
-            👤 User B: Priya
+          <button type="button" class="btn btn-secondary btn-sm" style="flex: 1;" onclick="fillDemo('priya@example.com')">
+            👤 User B (Priya)
           </button>
         </div>
       </div>
 
-      <p style="text-align: center; font-size: 13.5px; color: var(--text-muted); margin-top: 20px;">
-        Don't have an account yet? <a href="register.html">Sign Up here</a>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-top: 22px;">
+        New to CineReview? <a href="register.html" style="color: var(--apple-blue); font-weight: 500;">Create yours now.</a>
       </p>
     </div>
   </main>
@@ -106,7 +107,7 @@
         const res = await API.post('/auth/login', { email, password });
         if (res.success && res.token) {
           API.setAuth(res.token, res.user);
-          Auth.showToast('Login successful! Redirecting...', 'success');
+          Auth.showToast('Signed in successfully', 'success');
           setTimeout(() => {
             window.location.href = 'index.html';
           }, 600);

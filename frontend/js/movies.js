@@ -1,5 +1,5 @@
 /**
- * Movie Catalog & Dashboard Operations
+ * Movie Catalog & Dashboard Operations - Apple Design System
  */
 
 let allMovies = [];
@@ -8,17 +8,9 @@ let currentGenreFilter = 'ALL';
 // Helper to render star rating representation
 const renderStars = (rating) => {
   const fullStars = Math.floor(rating);
-  const halfStar = rating % 1 >= 0.5;
   let starsHtml = '';
-
   for (let i = 1; i <= 5; i++) {
-    if (i <= fullStars) {
-      starsHtml += '★';
-    } else if (i === fullStars + 1 && halfStar) {
-      starsHtml += '★'; // visual approximation
-    } else {
-      starsHtml += '☆';
-    }
+    starsHtml += i <= fullStars ? '★' : '☆';
   }
   return starsHtml;
 };
@@ -35,36 +27,42 @@ const loadDashboardStats = async () => {
 
       if (elMovies) elMovies.textContent = totalMovies;
       if (elReviews) elReviews.textContent = totalReviews;
-      if (elAvg) elAvg.textContent = platformAverageRating > 0 ? platformAverageRating.toFixed(1) : 'N/A';
+      if (elAvg) elAvg.textContent = platformAverageRating > 0 ? platformAverageRating.toFixed(1) : '—';
     }
   } catch (err) {
     console.warn('Could not load dashboard statistics:', err);
   }
 };
 
-// Render Movie Cards to Grid
+// Render Movie Cards to Grid (Apple TV+ Style)
 const renderMovieGrid = (movies) => {
   const grid = document.getElementById('movie-grid');
   if (!grid) return;
 
   if (movies.length === 0) {
     grid.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
-        <p style="font-size: 18px; margin-bottom: 8px;">No movies found matching your selection.</p>
-        <p style="font-size: 14px;">Try selecting another genre or add a new movie.</p>
+      <div style="grid-column: 1 / -1; text-align: center; padding: 80px 20px; color: var(--text-tertiary);">
+        <p style="font-size: 19px; font-weight: 600; color: #fff; margin-bottom: 6px;">No films found.</p>
+        <p style="font-size: 14px;">Try searching for another title or clear your genre filter.</p>
       </div>
     `;
     return;
   }
 
   grid.innerHTML = movies.map((movie) => {
-    const avgRating = movie.averageRating > 0 ? movie.averageRating.toFixed(1) : 'No reviews';
+    const avgRating = movie.averageRating > 0 ? `${movie.averageRating.toFixed(1)}` : 'Unrated';
     const totalReviews = movie.totalReviews || 0;
 
     return `
       <div class="movie-card" data-genre="${movie.genre}">
         <div class="poster-wrapper">
-          <img src="${movie.posterUrl}" alt="${movie.title}" class="poster-img" onerror="this.src='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800'">
+          <img 
+            src="${movie.posterUrl}" 
+            alt="${movie.title}" 
+            class="poster-img" 
+            loading="lazy"
+            onerror="this.src='https://image.tmdb.org/t/p/w780/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg'"
+          >
           <div class="rating-badge">
             <span>★</span>
             <span>${avgRating}</span>
@@ -74,12 +72,12 @@ const renderMovieGrid = (movies) => {
         <div class="movie-info">
           <h3 class="movie-title" title="${movie.title}">${movie.title}</h3>
           <div class="movie-meta">
-            <span>📅 ${movie.releaseYear}</span>
-            <span>💬 ${totalReviews} ${totalReviews === 1 ? 'review' : 'reviews'}</span>
+            <span>${movie.releaseYear}</span>
+            <span>${totalReviews} ${totalReviews === 1 ? 'critique' : 'critiques'}</span>
           </div>
           <p class="movie-desc">${movie.description}</p>
           <a href="movie-details.html?id=${movie._id}" class="btn btn-secondary btn-sm" style="width: 100%; margin-top: auto;">
-            View Details & Reviews →
+            Details &amp; Reviews →
           </a>
         </div>
       </div>
@@ -91,9 +89,8 @@ const renderMovieGrid = (movies) => {
 const filterMovies = (genre) => {
   currentGenreFilter = genre;
 
-  // Update pill styles
   document.querySelectorAll('.filter-pill').forEach((pill) => {
-    if (pill.dataset.genre === genre) {
+    if (pill.dataset.genre.toLowerCase() === genre.toLowerCase()) {
       pill.classList.add('active');
     } else {
       pill.classList.remove('active');
@@ -113,8 +110,8 @@ const loadMovies = async () => {
   const grid = document.getElementById('movie-grid');
   if (grid) {
     grid.innerHTML = `
-      <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim);">
-        <p>Loading cinematic catalog...</p>
+      <div style="grid-column: 1 / -1; text-align: center; padding: 80px 20px; color: var(--text-tertiary);">
+        <p style="font-size: 15px;">Loading catalog...</p>
       </div>
     `;
   }
@@ -128,16 +125,16 @@ const loadMovies = async () => {
   } catch (err) {
     if (grid) {
       grid.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--accent-red);">
-          <p>Failed to connect to backend REST API.</p>
-          <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">Ensure server is running on port 5001.</p>
+        <div style="grid-column: 1 / -1; text-align: center; padding: 50px; color: var(--apple-red);">
+          <p style="font-weight: 600;">Unable to connect to CineReview API</p>
+          <p style="font-size: 13px; color: var(--text-secondary); margin-top: 6px;">Ensure server is running on port 5001.</p>
         </div>
       `;
     }
   }
 };
 
-// Search filter helper
+// Setup real-time search
 const setupSearch = () => {
   const searchInput = document.getElementById('movie-search');
   if (!searchInput) return;
@@ -158,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
   loadMovies();
   setupSearch();
 
-  // Attach filter pill handlers
   document.querySelectorAll('.filter-pill').forEach((pill) => {
     pill.addEventListener('click', () => {
       filterMovies(pill.dataset.genre);

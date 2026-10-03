@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CineReview - Movie Review Platform | ITM Skills University</title>
+  <title>CineReview — Apple-Inspired Movie Review Platform</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Apple Frosted Glass Navbar -->
   <nav class="navbar">
     <div class="container nav-container">
       <a href="index.html" class="brand-logo">
-        <span class="brand-icon">🎬</span>
+        <span class="brand-icon"></span>
         <span>CineReview</span>
       </a>
       <div class="nav-links">
-        <a href="index.html" class="nav-link active">Movies</a>
+        <a href="index.html" class="nav-link active">Catalog</a>
         <div id="nav-auth-container" class="nav-links">
           <!-- Populated dynamically by auth.js -->
         </div>
@@ -24,36 +24,28 @@
     </div>
   </nav>
 
-  <!-- Hero & Dashboard Section -->
+  <!-- Apple TV+ Inspired Hero Section -->
   <section class="hero-section">
     <div class="container">
-      <h1 class="hero-title">Discover, Rate & Review Cinema</h1>
+      <span class="hero-eyebrow">CINEREVIEW ORIGINALS &amp; CRITIQUES</span>
+      <h1 class="hero-title">Cinema, pure and simple.</h1>
       <p class="hero-subtitle">
-        Explore audience ratings dynamically aggregated in real-time using MongoDB pipelines. Share your authentic critiques with secure ownership-backed permissions.
+        Explore audience ratings dynamically aggregated in real-time using MongoDB pipelines. Share authentic critiques protected by strict server-side ownership authorization.
       </p>
 
-      <!-- KPI Statistics Dashboard (Part 13) -->
+      <!-- Minimalist Apple KPI Metrics Grid -->
       <div class="kpi-grid">
         <div class="kpi-card">
-          <div class="kpi-icon">🎥</div>
-          <div>
-            <div class="kpi-value" id="stat-total-movies">-</div>
-            <div class="kpi-label">Catalogued Movies</div>
-          </div>
+          <div class="kpi-value" id="stat-total-movies">-</div>
+          <div class="kpi-label">Catalogued Films</div>
         </div>
         <div class="kpi-card">
-          <div class="kpi-icon gold">★</div>
-          <div>
-            <div class="kpi-value" id="stat-platform-avg">-</div>
-            <div class="kpi-label">Platform Avg Rating</div>
-          </div>
+          <div class="kpi-value" id="stat-platform-avg">-</div>
+          <div class="kpi-label">Platform Score (★ / 5.0)</div>
         </div>
         <div class="kpi-card">
-          <div class="kpi-icon rose">💬</div>
-          <div>
-            <div class="kpi-value" id="stat-total-reviews">-</div>
-            <div class="kpi-label">Verified Reviews</div>
-          </div>
+          <div class="kpi-value" id="stat-total-reviews">-</div>
+          <div class="kpi-label">Verified Audience Critiques</div>
         </div>
       </div>
     </div>
@@ -61,10 +53,10 @@
 
   <!-- Main Content & Catalog -->
   <main class="container">
-    <!-- Filter & Search Toolbar -->
+    <!-- Apple Segmented Control Toolbar -->
     <div class="toolbar">
       <div class="filter-pills">
-        <button class="filter-pill active" data-genre="ALL">All Genres</button>
+        <button class="filter-pill active" data-genre="ALL">All</button>
         <button class="filter-pill" data-genre="Sci-Fi">Sci-Fi</button>
         <button class="filter-pill" data-genre="Action">Action</button>
         <button class="filter-pill" data-genre="Drama">Drama</button>
@@ -72,13 +64,12 @@
         <button class="filter-pill" data-genre="Animation">Animation</button>
       </div>
 
-      <div style="flex: 1; max-width: 320px;">
+      <div>
         <input 
           type="text" 
           id="movie-search" 
-          class="form-control" 
-          placeholder="🔍 Search title or synopsis..." 
-          style="padding: 7px 14px; font-size: 13.5px;"
+          class="search-input" 
+          placeholder="Search by title or director..."
         >
       </div>
     </div>
@@ -89,14 +80,14 @@
     </div>
   </main>
 
-  <!-- Footer -->
+  <!-- Apple Minimalist Footer -->
   <footer class="footer">
     <div class="container footer-content">
       <div>
-        <strong>CineReview Platform</strong> — Case Study No. 118
+        <strong>CineReview</strong> — Case Study No. 118: Movie Review Platform
       </div>
       <div>
-        Aaroh Wankhade (Student ID: 150096726175) | ITM Skills University
+        Aaroh Wankhade (Student ID: 150096726175) | School of FutureTech, ITM Skills University
       </div>
     </div>
   </footer>

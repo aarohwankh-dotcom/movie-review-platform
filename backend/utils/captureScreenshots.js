@@ -13,6 +13,22 @@ const SCREENSHOT_DIR = path.join(__dirname, '../../screenshots');
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+const waitForImages = async (page) => {
+  await page.evaluate(async () => {
+    const images = Array.from(document.querySelectorAll('img'));
+    await Promise.all(
+      images.map((img) => {
+        if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
+        return new Promise((resolve) => {
+          img.addEventListener('load', resolve, { once: true });
+          img.addEventListener('error', resolve, { once: true });
+          setTimeout(resolve, 3000);
+        });
+      })
+    );
+  });
+};
+
 const captureAll = async () => {
   console.log('[Screenshots] Launching Google Chrome headless via puppeteer-core...');
 
@@ -20,11 +36,16 @@ const captureAll = async () => {
     fs.mkdirSync(SCREENSHOT_DIR, { recursive: true });
   }
 
+  const ASSETS_SCREENSHOT_DIR = path.join(__dirname, '../../assets/screenshots');
+  if (!fs.existsSync(ASSETS_SCREENSHOT_DIR)) {
+    fs.mkdirSync(ASSETS_SCREENSHOT_DIR, { recursive: true });
+  }
+
   const browser = await puppeteer.launch({
     executablePath: CHROME_PATH,
     headless: 'new',
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'],
-    defaultViewport: { width: 1280, height: 850, deviceScaleFactor: 2 },
+    defaultViewport: { width: 1360, height: 900, deviceScaleFactor: 2 },
   });
 
   try {
@@ -33,8 +54,11 @@ const captureAll = async () => {
     // 1. Dashboard & Catalog
     console.log('[1/8] Capturing Screenshot 1: Movie Dashboard...');
     await page.goto('http://localhost:5001/index.html', { waitUntil: 'networkidle2' });
-    await sleep(800);
-    await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'screenshot_1_dashboard.png') });
+    await waitForImages(page);
+    await sleep(1000);
+    const dashPath = path.join(SCREENSHOT_DIR, 'screenshot_1_dashboard.png');
+    await page.screenshot({ path: dashPath });
+    fs.copyFileSync(dashPath, path.join(ASSETS_SCREENSHOT_DIR, 'screenshot1.png'));
 
     // 2. User Login Page with Demo Quick-Fill
     console.log('[2/8] Capturing Screenshot 2: User Login Page...');
@@ -78,8 +102,11 @@ const captureAll = async () => {
     const targetMovieId = moviesData.data[0]._id;
 
     await page.goto(`http://localhost:5001/movie-details.html?id=${targetMovieId}`, { waitUntil: 'networkidle2' });
+    await waitForImages(page);
     await sleep(1000);
-    await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'screenshot_4_movie_details.png') });
+    const detailsPath = path.join(SCREENSHOT_DIR, 'screenshot_4_movie_details.png');
+    await page.screenshot({ path: detailsPath });
+    fs.copyFileSync(detailsPath, path.join(ASSETS_SCREENSHOT_DIR, 'screenshot2.png'));
 
     // 6. Review Form Section
     console.log('[6/8] Capturing Screenshot 5: Review Submission Form...');
@@ -90,7 +117,9 @@ const captureAll = async () => {
     await sleep(400);
     await page.type('#review-text-input', 'A transcendent cinematic voyage. Christopher Nolan orchestrates visual and emotional brilliance with unflinching precision.');
     await sleep(400);
-    await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'screenshot_5_review_form.png') });
+    const reviewFormPath = path.join(SCREENSHOT_DIR, 'screenshot_5_review_form.png');
+    await page.screenshot({ path: reviewFormPath });
+    fs.copyFileSync(reviewFormPath, path.join(ASSETS_SCREENSHOT_DIR, 'screenshot3.png'));
 
     // Submit the review
     console.log('      Submitting review...');
@@ -104,7 +133,9 @@ const captureAll = async () => {
       if (el) el.scrollIntoView({ behavior: 'instant', block: 'center' });
     });
     await sleep(500);
-    await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'screenshot_6_review_owner_actions.png') });
+    const reviewOwnerPath = path.join(SCREENSHOT_DIR, 'screenshot_6_review_owner_actions.png');
+    await page.screenshot({ path: reviewOwnerPath });
+    fs.copyFileSync(reviewOwnerPath, path.join(ASSETS_SCREENSHOT_DIR, 'screenshot4.png'));
 
     // 8. Edit Review Modal
     console.log('[8/8] Capturing Screenshot 7: Edit Review Modal...');
@@ -116,7 +147,7 @@ const captureAll = async () => {
       await page.screenshot({ path: path.join(SCREENSHOT_DIR, 'screenshot_7_edit_modal.png') });
     }
 
-    console.log('[Screenshots] ✓ All 8 web application screenshots captured successfully!');
+    console.log('[Screenshots] ✓ All 8 web application screenshots captured and synchronized successfully!');
   } catch (err) {
     console.error('[Screenshots Error]:', err);
   } finally {

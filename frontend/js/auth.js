@@ -1,5 +1,5 @@
 /**
- * Authentication & UI Session Manager
+ * Authentication & UI Session Manager - Apple Design System
  */
 
 const Auth = {
@@ -16,24 +16,24 @@ const Auth = {
           <div class="user-avatar">${user.name.charAt(0).toUpperCase()}</div>
           <span class="user-name">${user.name}</span>
         </div>
-        <a href="add-movie.html" class="btn btn-secondary btn-sm">+ Add Movie</a>
-        <button id="logout-btn" class="btn btn-outline btn-sm">Logout</button>
+        <a href="add-movie.html" class="btn btn-secondary btn-sm">+ Add Film</a>
+        <button id="logout-btn" class="btn btn-outline btn-sm">Sign Out</button>
       `;
 
       const logoutBtn = document.getElementById('logout-btn');
       if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
           API.clearAuth();
-          Auth.showToast('Logged out successfully', 'info');
+          Auth.showToast('Signed out', 'info');
           setTimeout(() => {
             window.location.href = 'index.html';
-          }, 800);
+          }, 600);
         });
       }
     } else {
       navAuthContainer.innerHTML = `
-        <a href="login.html" class="btn btn-outline btn-sm">Login</a>
-        <a href="register.html" class="btn btn-primary btn-sm">Sign Up</a>
+        <a href="login.html" class="btn btn-outline btn-sm">Sign In</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Create Account</a>
       `;
     }
   },
@@ -64,11 +64,10 @@ const Auth = {
     setTimeout(() => {
       toast.classList.remove('show');
       setTimeout(() => toast.remove(), 300);
-    }, 3500);
+    }, 3200);
   },
 };
 
-// Initialize navbar state on DOM load
 document.addEventListener('DOMContentLoaded', () => {
   Auth.updateNavbar();
 });

@@ -1,9 +1,5 @@
 /**
- * Movie Details & Review Ownership Manager
- * Implements Case Study 118 Core Operations:
- * - Dynamic Aggregation Refresh
- * - Review Ownership Authorization UI
- * - Review Posting, Editing & Deletion
+ * Movie Details & Review Ownership Manager - Apple Design System
  */
 
 let currentMovieId = null;
@@ -57,8 +53,8 @@ const refreshAverageRating = async (movieId) => {
       const countEl = document.getElementById('movie-review-count');
       const starsEl = document.getElementById('movie-avg-stars');
 
-      if (scoreEl) scoreEl.textContent = averageRating > 0 ? averageRating.toFixed(1) : '0.0';
-      if (countEl) countEl.textContent = `${totalReviews} ${totalReviews === 1 ? 'review' : 'reviews'}`;
+      if (scoreEl) scoreEl.textContent = averageRating > 0 ? averageRating.toFixed(1) : '—';
+      if (countEl) countEl.textContent = `${totalReviews} ${totalReviews === 1 ? 'verified critique' : 'verified critiques'}`;
       if (starsEl) starsEl.textContent = getStarsString(averageRating);
     }
   } catch (err) {
@@ -66,7 +62,7 @@ const refreshAverageRating = async (movieId) => {
   }
 };
 
-// Render review cards with ownership-aware buttons
+// Render review cards with ownership-aware buttons (Apple style)
 const renderReviews = (reviews) => {
   const container = document.getElementById('reviews-list-container');
   if (!container) return;
@@ -75,16 +71,15 @@ const renderReviews = (reviews) => {
 
   if (!reviews || reviews.length === 0) {
     container.innerHTML = `
-      <div style="text-align: center; padding: 40px; color: var(--text-dim); background: var(--bg-card); border-radius: var(--radius-md); border: 1px dashed var(--border-color);">
-        <p style="font-size: 16px; margin-bottom: 6px;">No reviews yet for this movie.</p>
-        <p style="font-size: 13px;">Be the first audience member to share your thoughts!</p>
+      <div style="text-align: center; padding: 50px 20px; color: var(--text-tertiary); background: var(--bg-surface); border-radius: var(--radius-card); border: 1px dashed var(--border-subtle);">
+        <p style="font-size: 17px; font-weight: 600; color: #fff; margin-bottom: 6px;">No critiques yet.</p>
+        <p style="font-size: 13.5px;">Be the first audience member to share an authentic review.</p>
       </div>
     `;
     return;
   }
 
   container.innerHTML = reviews.map((rev) => {
-    // Check ownership: does this review belong to currently logged in user?
     const isOwner = currentUser && rev.user && (
       (rev.user._id && rev.user._id === currentUser._id) ||
       (rev.user === currentUser._id)
@@ -106,7 +101,7 @@ const renderReviews = (reviews) => {
             <div>
               <div class="reviewer-name">
                 ${reviewerName}
-                ${isOwner ? '<span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; margin-left: 6px; font-size: 10px;">YOU</span>' : ''}
+                ${isOwner ? '<span class="badge" style="background: rgba(48, 209, 88, 0.15); color: #30d158; margin-left: 8px; font-size: 11px; font-weight: 600;">YOU (AUTHOR)</span>' : ''}
               </div>
               <div class="review-date">${dateFormatted}</div>
             </div>
@@ -121,10 +116,10 @@ const renderReviews = (reviews) => {
         ${isOwner ? `
           <div class="review-actions">
             <button class="btn btn-secondary btn-sm" onclick="openEditModal('${rev._id}', ${rev.rating}, '${encodeURIComponent(rev.reviewText)}')">
-              ✏️ Edit Review
+              Edit Critique
             </button>
             <button class="btn btn-danger btn-sm" onclick="deleteReview('${rev._id}')">
-              🗑 Delete Review
+              Delete
             </button>
           </div>
         ` : ''}
@@ -146,8 +141,7 @@ const loadMovieDetails = async () => {
     if (res.success && res.data) {
       const movie = res.data;
 
-      // Populate Movie metadata
-      document.title = `${movie.title} - Movie Review Platform`;
+      document.title = `${movie.title} — CineReview`;
       const titleEl = document.getElementById('movie-title');
       const posterEl = document.getElementById('movie-poster');
       const genreEl = document.getElementById('movie-genre');
@@ -160,18 +154,15 @@ const loadMovieDetails = async () => {
       if (yearEl) yearEl.textContent = movie.releaseYear;
       if (descEl) descEl.textContent = movie.description;
 
-      // Update Aggregation Ratings
       await refreshAverageRating(movie._id);
-
-      // Render Reviews List
       renderReviews(movie.reviews);
     }
   } catch (err) {
-    Auth.showToast(`Error loading movie: ${err.message}`, 'error');
+    Auth.showToast(`Error loading film: ${err.message}`, 'error');
   }
 };
 
-// Submit New Review Form
+// Setup review submission form
 const setupReviewForm = () => {
   const form = document.getElementById('new-review-form');
   const loginPrompt = document.getElementById('review-login-prompt');
@@ -186,7 +177,6 @@ const setupReviewForm = () => {
   if (form) form.style.display = 'block';
   if (loginPrompt) loginPrompt.style.display = 'none';
 
-  // Star selector clicks
   const starSelector = document.getElementById('star-selector');
   if (starSelector) {
     starSelector.querySelectorAll('.star-item').forEach((star) => {
@@ -204,7 +194,7 @@ const setupReviewForm = () => {
       const reviewText = textInput.value.trim();
 
       if (!reviewText) {
-        Auth.showToast('Please enter your review text', 'error');
+        Auth.showToast('Please enter your critique commentary', 'error');
         return;
       }
 
@@ -215,14 +205,13 @@ const setupReviewForm = () => {
         });
 
         if (res.success) {
-          Auth.showToast('Review posted successfully!', 'success');
+          Auth.showToast('Critique published successfully', 'success');
           textInput.value = '';
           setStarRating(5);
-          // Reload details and dynamically recalculated average rating
           await loadMovieDetails();
         }
       } catch (err) {
-        Auth.showToast(err.message || 'Failed to submit review', 'error');
+        Auth.showToast(err.message || 'Failed to submit critique', 'error');
       }
     });
   }
@@ -230,18 +219,18 @@ const setupReviewForm = () => {
 
 // Delete Review (Owner-only operation)
 window.deleteReview = async (reviewId) => {
-  if (!confirm('Are you sure you want to permanently delete this review?')) {
+  if (!confirm('Permanently delete this critique?')) {
     return;
   }
 
   try {
     const res = await API.delete(`/reviews/${reviewId}`);
     if (res.success) {
-      Auth.showToast('Review deleted successfully', 'success');
+      Auth.showToast('Critique deleted', 'success');
       await loadMovieDetails();
     }
   } catch (err) {
-    Auth.showToast(err.message || 'Unauthorized: Cannot delete this review', 'error');
+    Auth.showToast(err.message || 'Unauthorized: Only author can delete this review', 'error');
   }
 };
 
@@ -277,7 +266,7 @@ window.saveEditedReview = async () => {
   const reviewText = textInput.value.trim();
 
   if (!reviewText) {
-    Auth.showToast('Review text cannot be empty', 'error');
+    Auth.showToast('Critique text cannot be empty', 'error');
     return;
   }
 
@@ -288,7 +277,7 @@ window.saveEditedReview = async () => {
     });
 
     if (res.success) {
-      Auth.showToast('Review updated successfully!', 'success');
+      Auth.showToast('Critique updated successfully', 'success');
       closeEditModal();
       await loadMovieDetails();
     }

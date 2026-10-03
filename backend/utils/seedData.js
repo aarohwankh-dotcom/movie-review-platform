@@ -1,11 +1,7 @@
 /**
- * Database Seeder Utility
+ * Database Seeder Utility - Real Movies & Authentic Critiques
  * Case Study 118: Movie Review Platform
  * Semester 3 Backend Development - ITM Skills University
- * 
- * Populates realistic movies, demo users, and initial reviews to demonstrate:
- * - Dynamic MongoDB average rating aggregation
- * - Ownership-based review authorization (User A vs User B)
  */
 
 const mongoose = require('mongoose');
@@ -21,7 +17,7 @@ const usersData = [
   {
     name: 'Aaroh Wankhade',
     email: 'aaroh@example.com',
-    password: 'password123', // Will be hashed via pre-save hook
+    password: 'password123',
   },
   {
     name: 'Priya Sharma',
@@ -37,60 +33,72 @@ const usersData = [
 
 const moviesData = [
   {
-    title: 'Inception',
-    description: 'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.',
+    title: 'Oppenheimer',
+    description: 'The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb during World War II, exploring moral culpability, geopolitical tensions, and scientific ambition.',
+    genre: 'Drama',
+    releaseYear: 2023,
+    posterUrl: 'https://image.tmdb.org/t/p/w780/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg',
+  },
+  {
+    title: 'Interstellar',
+    description: 'When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humanity.',
     genre: 'Sci-Fi',
-    releaseYear: 2010,
-    posterUrl: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&auto=format&fit=crop',
+    releaseYear: 2014,
+    posterUrl: 'https://image.tmdb.org/t/p/w780/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg',
   },
   {
     title: 'The Dark Knight',
     description: 'When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.',
     genre: 'Action',
     releaseYear: 2008,
-    posterUrl: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=800&auto=format&fit=crop',
+    posterUrl: 'https://image.tmdb.org/t/p/w780/qJ2tW6WMUDux911r6m7haRef0WH.jpg',
   },
   {
-    title: 'Interstellar',
-    description: 'When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.',
+    title: 'Inception',
+    description: 'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., while grappling with tragic personal memories.',
     genre: 'Sci-Fi',
-    releaseYear: 2014,
-    posterUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop',
+    releaseYear: 2010,
+    posterUrl: 'https://image.tmdb.org/t/p/w780/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg',
   },
   {
     title: 'Pulp Fiction',
-    description: 'The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.',
+    description: 'The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence, dark humor, and unexpected redemption in Los Angeles.',
     genre: 'Crime',
     releaseYear: 1994,
-    posterUrl: 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=800&auto=format&fit=crop',
+    posterUrl: 'https://image.tmdb.org/t/p/w780/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg',
+  },
+  {
+    title: 'Spider-Man: Across the Spider-Verse',
+    description: 'Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People charged with protecting its very existence, forcing him to redefine what it means to be a hero.',
+    genre: 'Animation',
+    releaseYear: 2023,
+    posterUrl: 'https://image.tmdb.org/t/p/w780/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg',
   },
   {
     title: 'Spirited Away',
-    description: 'During her family\'s move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, a world where humans are changed into beasts.',
+    description: 'During her family\'s move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, where humans are changed into beasts.',
     genre: 'Animation',
     releaseYear: 2001,
-    posterUrl: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop',
+    posterUrl: 'https://image.tmdb.org/t/p/w780/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg',
   },
   {
     title: 'The Shawshank Redemption',
-    description: 'Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion.',
+    description: 'Over the course of several years, two convicts form a friendship, seeking consolation and, eventually, redemption through basic compassion within the harsh walls of Shawshank prison.',
     genre: 'Drama',
     releaseYear: 1994,
-    posterUrl: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=800&auto=format&fit=crop',
+    posterUrl: 'https://image.tmdb.org/t/p/w780/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg',
   },
 ];
 
 const seedDatabase = async () => {
   try {
-    console.log('[Seeder] Starting database population...');
+    console.log('[Seeder] Starting database population with real cinematic catalog...');
 
-    // Clear existing collections
     await Review.deleteMany({});
     await Movie.deleteMany({});
     await User.deleteMany({});
     console.log('[Seeder] Cleared previous records');
 
-    // Create Users
     const createdUsers = [];
     for (const u of usersData) {
       const user = await User.create(u);
@@ -98,7 +106,6 @@ const seedDatabase = async () => {
     }
     console.log(`[Seeder] Created ${createdUsers.length} test users`);
 
-    // Create Movies
     const createdMovies = [];
     for (const m of moviesData) {
       const movie = await Movie.create({
@@ -107,58 +114,67 @@ const seedDatabase = async () => {
       });
       createdMovies.push(movie);
     }
-    console.log(`[Seeder] Created ${createdMovies.length} movies`);
+    console.log(`[Seeder] Created ${createdMovies.length} real movies`);
 
-    // Create Initial Reviews
     const reviewsData = [
       {
-        movie: createdMovies[0]._id, // Inception
+        movie: createdMovies[0]._id, // Oppenheimer
         user: createdUsers[0]._id,  // Aaroh
         rating: 5,
-        reviewText: 'Christopher Nolan at his pinnacle! Mind-bending visuals and Hans Zimmer score is pure perfection.',
+        reviewText: 'A monolithic cinematic achievement. Cillian Murphy delivers a haunting, career-defining performance as the father of the atomic bomb. Ludwig Göransson\'s pulsating score ratchets up unbearable tension in the Trinity test sequence.',
       },
       {
-        movie: createdMovies[0]._id, // Inception
+        movie: createdMovies[0]._id, // Oppenheimer
         user: createdUsers[1]._id,  // Priya
-        rating: 4,
-        reviewText: 'Incredible storytelling and complex concepts. Demands your full attention from start to finish.',
+        rating: 5,
+        reviewText: 'Nolan crafts an intense biographical thriller that feels like a psychological horror film. The sound design during the gymnasium speech gives goosebumps.',
       },
       {
-        movie: createdMovies[1]._id, // Dark Knight
+        movie: createdMovies[1]._id, // Interstellar
         user: createdUsers[0]._id,  // Aaroh
         rating: 5,
-        reviewText: 'Heath Ledger\'s Joker is legendary. The gold standard for comic book adaptations and psychological thrillers.',
+        reviewText: 'Hans Zimmer\'s organ score and Hoyte van Hoytema\'s 70mm cinematography create pure emotional resonance. The docking sequence remains one of the greatest moments in sci-fi history.',
       },
       {
-        movie: createdMovies[1]._id, // Dark Knight
-        user: createdUsers[2]._id,  // Rajesh
-        rating: 5,
-        reviewText: 'Masterpiece cinema. Gripping pacing, intense moral conflicts, and unforgettable acting.',
-      },
-      {
-        movie: createdMovies[2]._id, // Interstellar
-        user: createdUsers[1]._id,  // Priya
-        rating: 5,
-        reviewText: 'A deeply emotional journey through space and time. The docking scene gives goosebumps every single time.',
-      },
-      {
-        movie: createdMovies[3]._id, // Pulp Fiction
+        movie: createdMovies[1]._id, // Interstellar
         user: createdUsers[2]._id,  // Rajesh
         rating: 4,
-        reviewText: 'Iconic dialogue and non-linear narrative structure. Tarantino defined 90s cinema with this one.',
+        reviewText: 'Ambitious, breathtaking, and scientifically grounded. The emotional core between Cooper and Murph anchors the expansive theoretical physics concepts.',
+      },
+      {
+        movie: createdMovies[2]._id, // The Dark Knight
+        user: createdUsers[0]._id,  // Aaroh
+        rating: 5,
+        reviewText: 'Heath Ledger\'s Joker is legendary. The gold standard for comic book adaptations and psychological crime thrillers that transcended the superhero genre completely.',
+      },
+      {
+        movie: createdMovies[2]._id, // The Dark Knight
+        user: createdUsers[1]._id,  // Priya
+        rating: 5,
+        reviewText: 'A relentless ethical debate disguised as a summer blockbuster. Practical stunts, IMAX cameras, and impeccable pacing from start to finish.',
+      },
+      {
+        movie: createdMovies[3]._id, // Inception
+        user: createdUsers[2]._id,  // Rajesh
+        rating: 5,
+        reviewText: 'Mind-bending architecture and layered narrative structure. Nolan balances complex dream mechanics with intimate emotional stakes effortlessly.',
+      },
+      {
+        movie: createdMovies[5]._id, // Across the Spider-Verse
+        user: createdUsers[1]._id,  // Priya
+        rating: 5,
+        reviewText: 'A visual revolution in animation. Each universe has its own distinct art style, and the musical pacing by Metro Boomin and Daniel Pemberton is extraordinary.',
       },
     ];
 
     await Review.insertMany(reviewsData);
-    console.log(`[Seeder] Inserted ${reviewsData.length} initial reviews`);
-
-    console.log('[Seeder] ✓ Database populated successfully with demo data!');
+    console.log(`[Seeder] Inserted ${reviewsData.length} genuine critiques`);
+    console.log('[Seeder] ✓ Database populated successfully with authentic cinematic catalog!');
   } catch (error) {
     console.error(`[Seeder Error]: ${error.message}`);
   }
 };
 
-// If run directly from CLI
 if (require.main === module) {
   (async () => {
     await connectDB();
