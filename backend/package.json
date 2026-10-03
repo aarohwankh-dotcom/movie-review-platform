@@ -29,7 +29,6 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "mongodb-memory-server": "^9.4.0",
-    "puppeteer-core": "^24.43.1"
+    "mongodb-memory-server": "^9.4.0"
   }
 }
