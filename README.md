@@ -3,8 +3,9 @@
 **Student:** Aaroh Wankhade (Student ID: 150096726175)  
 **Programme:** B.Tech Computer Science Engineering (2025–2029)  
 **Institution:** School of FutureTech, ITM Skills University  
-**Live Backend API:** `http://localhost:5001/api` (Local) | Render/Railway Deployable  
-**Live Frontend Console:** `http://localhost:5001/index.html`  
+**Live Cloud Platform:** [https://movie-review-platform-1dv6.onrender.com](https://movie-review-platform-1dv6.onrender.com)  
+**Live Backend REST API:** [https://movie-review-platform-1dv6.onrender.com/api](https://movie-review-platform-1dv6.onrender.com/api)  
+**GitHub Repository:** [https://github.com/aarohwankh-dotcom/movie-review-platform](https://github.com/aarohwankh-dotcom/movie-review-platform)  
 
 ---
 
