@@ -33,7 +33,11 @@ const connectDB = async () => {
   // 2. Fallback: Launch in-memory MongoDB instance for reliable offline demo
   try {
     const { MongoMemoryServer } = require('mongodb-memory-server');
-    mongoMemoryServer = await MongoMemoryServer.create();
+    mongoMemoryServer = await MongoMemoryServer.create({
+      binary: {
+        version: '7.0.3',
+      },
+    });
     const memoryUri = mongoMemoryServer.getUri();
     const conn = await mongoose.connect(memoryUri);
     console.log(`[MongoDB] In-Memory MongoDB running and connected at: ${memoryUri}`);
