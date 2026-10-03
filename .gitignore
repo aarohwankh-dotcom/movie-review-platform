@@ -22,3 +22,12 @@ yarn-error.log*
 # Scratch & temporary artifacts
 scratch/
 .temp/
+
+# Private student study notes (Local only, not pushed to public GitHub)
+STUDENT_VIVA_AND_CODE_EXPLAINER.pdf
+VIVA_NOTES.md
+STUDENT_VIVA_AND_CODE_EXPLAINER.html
+Movie_Review_Platform_Report.html
+assets/
+screenshots/
+docs/
